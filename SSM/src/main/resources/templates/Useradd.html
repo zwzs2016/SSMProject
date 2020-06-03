@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Useradd</title>
+    <style type="text/css">
+    	body{
+    		display: flex;
+    		justify-content: center;
+    		align-items: center;
+    	}
+    	td{
+    		 border:1px solid red;
+    		width: 473px;	
+    		height: 23px;
+    	}
+    	table{
+    		width: 471px;
+    		/*background-color: #000;*/
+    	}
+    </style>
+</head>
+<body>
+	<div>
+		<form action="/Useradd" method="POST">
+			<table>
+				<tr>
+					<td>
+						id:<input type="text" name="id">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						name:<input type="text" name="name">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						address:<input type="text" name="address">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="submit" value="提交">
+					</td>
+				</tr>
+			</table>
+		</form>		
+	</div>
+
+</body>
+</html>
