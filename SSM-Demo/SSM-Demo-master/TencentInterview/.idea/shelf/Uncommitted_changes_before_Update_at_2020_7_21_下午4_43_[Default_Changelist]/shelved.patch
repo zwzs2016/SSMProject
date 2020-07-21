@@ -1,0 +1,2152 @@
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Toyota.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Toyota.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Toyota.java	(date 1595320850500)
+@@ -0,0 +1,42 @@
++package com.uwan.SSM.AppBeans;
++
++public class Toyota implements Onecar,Twocar {
++    private int id;
++
++    public Toyota(){};
++
++    public int getId() {
++        return id;
++    }
++
++    public void setId(int id) {
++        this.id = id;
++    }
++
++    @Override
++    public String toString() {
++        return "OneCar{" +
++                "id=" + id +
++                '}';
++    }
++
++    @Override
++    public void f1() {
++        System.out.println("方法f1");
++    }
++
++    @Override
++    public void f2() {
++        System.out.println("方法f2");
++    }
++
++    @Override
++    public void f3() {
++        System.out.println("方法f3");
++    }
++
++    @Override
++    public void fun4() {
++        System.out.println("方法f4");
++    }
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/StudentSavaMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/StudentSavaMapper.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/StudentSavaMapper.java	(date 1595320850500)
+@@ -0,0 +1,9 @@
++package com.uwan.SSM.AppBeans;
++
++import com.uwan.SSM.Student;
++import org.apache.ibatis.annotations.Insert;
++
++public interface StudentSavaMapper {
++    @Insert("insert into student(id,name,address) values(#{id},#{name},#{address})")
++    int insertstudent(Student student);
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Twocar.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Twocar.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Twocar.java	(date 1595320850500)
+@@ -0,0 +1,5 @@
++package com.uwan.SSM.AppBeans;
++
++public interface Twocar {
++    public void fun4();
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppConfig/WebbeanConfig.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppConfig/WebbeanConfig.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppConfig/WebbeanConfig.java	(date 1595320850500)
+@@ -0,0 +1,43 @@
++package com.uwan.SSM.AppConfig;
++
++import com.uwan.SSM.AppBeans.Onecar;
++import com.uwan.SSM.AppBeans.Person;
++import com.uwan.SSM.AppBeans.Toyota;
++import com.uwan.SSM.AspectConfig.WebAspectsSatement;
++import org.springframework.context.annotation.Bean;
++import org.springframework.context.annotation.ComponentScan;
++import org.springframework.context.annotation.Configuration;
++import org.springframework.context.annotation.EnableAspectJAutoProxy;
++import org.springframework.context.support.ResourceBundleMessageSource;
++
++@Configuration
++@EnableAspectJAutoProxy
++
++@ComponentScan(basePackages = "com.uwan.SSM.AppConfig")
++public class WebbeanConfig {
++    @Bean
++    public Toyota Onecar() {
++        return new Toyota();
++    }
++
++    @Bean
++    public Person onePerson(Toyota toyota) {
++        return new Person(toyota, toyota);
++    }
++
++    @Bean
++    public ResourceBundleMessageSource messageSource() {
++        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
++        messageSource.setUseCodeAsDefaultMessage(true);
++        messageSource.setFallbackToSystemLocale(false);
++        messageSource.setBasename("application");
++        messageSource.setDefaultEncoding("UTF-8");
++        messageSource.setCacheSeconds(2);
++        return messageSource;
++    }
++
++    @Bean
++    public WebAspectsSatement webAspectsSatement() {
++        return new WebAspectsSatement();
++    }
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppDao/HUserDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppDao/HUserDao.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppDao/HUserDao.java	(date 1595320850500)
+@@ -0,0 +1,4 @@
++package com.uwan.SSM.AppDao;
++
++public class HUserDao {
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppView/HomeController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppView/HomeController.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppView/HomeController.java	(date 1595320850500)
+@@ -0,0 +1,25 @@
++package com.uwan.SSM.AppView;
++
++import org.thymeleaf.ITemplateEngine;
++import org.thymeleaf.context.WebContext;
++
++import javax.servlet.ServletContext;
++import javax.servlet.http.HttpServletRequest;
++import javax.servlet.http.HttpServletResponse;
++import java.text.SimpleDateFormat;
++import java.util.Calendar;
++
++public class HomeController implements IGTVGController{
++    @Override
++    public void process(
++            final HttpServletRequest request, final HttpServletResponse response,
++            final ServletContext servletContext, final ITemplateEngine templateEngine)
++            throws Exception {
++        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
++        Calendar cal = Calendar.getInstance();
++        WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
++        ctx.setVariable("today", dateFormat.format(cal.getTime()));
++        System.out.println(dateFormat.format(cal.getTime()));
++        templateEngine.process("index", ctx, response.getWriter());
++    }
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppView/GTVGApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppView/GTVGApplication.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppView/GTVGApplication.java	(date 1595320850500)
+@@ -0,0 +1,34 @@
++package com.uwan.SSM.AppView;
++
++import org.thymeleaf.TemplateEngine;
++import org.thymeleaf.templatemode.TemplateMode;
++import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
++
++import javax.servlet.ServletContext;
++
++public class GTVGApplication {
++    private final TemplateEngine templateEngine;
++
++    public GTVGApplication(final ServletContext servletContext) {
++
++        super();
++
++        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
++
++        // HTML is the default mode, but we set it anyway for better understanding of code
++        templateResolver.setTemplateMode(TemplateMode.HTML);
++        // This will convert "home" to "/WEB-INF/templates/home.html"
++        templateResolver.setPrefix("/webapp/WEB-INF/page/");
++        templateResolver.setSuffix(".html");
++        // Template cache TTL=1h. If not set, entries would be cached until expelled
++        templateResolver.setCacheTTLMs(Long.valueOf(3600000L));
++
++        // Cache is set to true by default. Set to false if you want templates to
++        // be automatically updated when modified.
++        templateResolver.setCacheable(true);
++
++        this.templateEngine = new TemplateEngine();
++        this.templateEngine.setTemplateResolver(templateResolver);
++
++    }
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppView/PageController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppView/PageController.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppView/PageController.java	(date 1595320850500)
+@@ -0,0 +1,35 @@
++package com.uwan.SSM.AppView;
++
++import com.uwan.SSM.Student;
++import org.springframework.context.annotation.Configuration;
++import org.springframework.stereotype.Controller;
++import org.springframework.web.bind.annotation.*;
++
++import java.text.SimpleDateFormat;
++import java.util.Calendar;
++import java.util.Map;
++
++@Controller
++public class PageController {
++    @GetMapping("/hh")
++    public String index(){
++        return "index";
++    }
++    @GetMapping("/home")
++    public String home(Map<String,String> map){
++        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
++        Calendar cal = Calendar.getInstance();
++        String todaytime = dateFormat.format(cal.getTime());
++        map.put("today",todaytime);
++        return "home";
++    }
++    @RequestMapping("/HelloHtml")
++    public String helloHtml(Map<String,String> map){
++        map.put("hello","from TemplateController.helloHtml");
++        return "/HelloHtml";
++    }
++    @GetMapping("/Userinfo")
++    public String Userinfo(){
++        return "Useradd";
++    }
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppView/IGTVGController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppView/IGTVGController.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppView/IGTVGController.java	(date 1595320850500)
+@@ -0,0 +1,13 @@
++package com.uwan.SSM.AppView;
++
++import org.thymeleaf.ITemplateEngine;
++
++import javax.servlet.ServletContext;
++import javax.servlet.http.HttpServletRequest;
++import javax.servlet.http.HttpServletResponse;
++
++public interface IGTVGController {
++    public void process(
++            HttpServletRequest request, HttpServletResponse response,
++            ServletContext servletContext, ITemplateEngine templateEngine) throws Exception;
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AspectConfig/WebAspectsSatement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AspectConfig/WebAspectsSatement.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AspectConfig/WebAspectsSatement.java	(date 1595320850500)
+@@ -0,0 +1,29 @@
++package com.uwan.SSM.AspectConfig;
++
++import com.uwan.SSM.AppBeans.Person;
++import org.aspectj.lang.annotation.After;
++import org.aspectj.lang.annotation.Around;
++import org.aspectj.lang.annotation.Aspect;
++import org.aspectj.lang.annotation.Before;
++
++@Aspect
++public class WebAspectsSatement {
++//    @After("execution(* com.uwan.SSM.*.*(..))")
++//    public void daAccessCheck(){
++//        System.out.println("Aspect成功");
++//    }
++    @Before("within(com.uwan.SSM.AppBeans.Person)")
++    public void beforesug(){
++        System.out.println("Person执行之前");
++    }
++    @Before("this(person)")
++    public void bind(Person person){
++        System.out.println("--------绑定代理对象【开始】--------");
++        System.out.println(person.getClass().getName());
++        System.out.println("--------绑定代理对象【结束】--------");
++    }
++//    @Around("within(com.uwan.SSM.AppBeans.Person)")
++//    public void dosome(){
++//        System.out.println("---------获取连接点对象【开始】---------");
++//    }
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/MybatisTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/MybatisTest.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/MybatisTest.java	(date 1595320850500)
+@@ -0,0 +1,44 @@
++package com.uwan.SSM;
++
++import com.uwan.SSM.AppBeans.StudentSavaMapper;
++import org.apache.ibatis.io.Resources;
++import org.apache.ibatis.session.SqlSession;
++import org.apache.ibatis.session.SqlSessionFactory;
++import org.apache.ibatis.session.SqlSessionFactoryBuilder;
++import org.junit.Test;
++
++import java.io.InputStream;
++import java.util.List;
++
++public class MybatisTest {
++    @Test
++    public void testFindall() throws Exception {
++        //1.读取配置文件，生成字节输入流
++        InputStream in = Resources.getResourceAsStream("SqlMapConfig.xml");
++        //2.获取SqlSessionFactory
++        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(in);
++        //3.获取sqlsession对象
++        SqlSession sqlSession = factory.openSession();
++        //4.获取dao的代理对象
++//        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
++//        StudentMapper sm=sqlSession.getMapper(StudentMapper.class);
++        StudentSavaMapper sm=sqlSession.getMapper(StudentSavaMapper.class);
++        int sid = sm.insertstudent(new Student(2L, "王五", "杭州"));
++        System.out.println(sid);
++//        Student s1=sm.getStudent(1L);
++//        List<Student> stu=sm.getStudent(1L);
++//        for (Student st:stu){
++//            System.out.println(st);
++//        }
++//        for (Long i:s1.getId())
++        //5执行查询所有方法
++//        List<User> users = userDao.findAll();
++//        for (User user:users){
++//            System.out.println(user);
++//        }
++        //释放资源
++        sqlSession.commit();
++        sqlSession.close();
++        in.close();
++    }
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/IUserDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/IUserDao.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/IUserDao.java	(date 1595320850500)
+@@ -0,0 +1,7 @@
++package com.uwan.SSM;
++
++import java.util.List;
++
++public interface IUserDao {
++    List<User> findAll();
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/QueryResults/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/QueryResults/User.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/QueryResults/User.java	(date 1595320850500)
+@@ -0,0 +1,4 @@
++package com.uwan.SSM.QueryResults;
++
++public class User {
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/Student.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/Student.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/Student.java	(date 1595320850500)
+@@ -0,0 +1,48 @@
++package com.uwan.SSM;
++
++import java.io.Serializable;
++
++public class Student implements Serializable {
++    private Long id;
++    private String name;
++    private String address;
++
++    public Student(Long id, String name, String address) {
++        this.id = id;
++        this.name = name;
++        this.address = address;
++    }
++
++    public Long getId() {
++        return id;
++    }
++
++    public void setId(Long id) {
++        this.id = id;
++    }
++
++    public String getName() {
++        return name;
++    }
++
++    public void setName(String name) {
++        this.name = name;
++    }
++
++    public String getAddress() {
++        return address;
++    }
++
++    public void setAddress(String address) {
++        this.address = address;
++    }
++
++    @Override
++    public String toString() {
++        return "Student{" +
++                "id=" + id +
++                ", name='" + name + '\'' +
++                ", address='" + address + '\'' +
++                '}';
++    }
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/SsmApplication.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/SsmApplication.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/SsmApplication.java	(date 1595320850500)
+@@ -0,0 +1,46 @@
++package com.uwan.SSM;
++
++import com.uwan.SSM.AppBeans.Person;
++import com.uwan.SSM.AppBeans.SaveData;
++import com.uwan.SSM.AppConfig.WebbeanConfig;
++import org.springframework.boot.SpringApplication;
++import org.springframework.boot.autoconfigure.SpringBootApplication;
++import org.springframework.context.ApplicationContext;
++import org.springframework.context.annotation.AnnotationConfigApplicationContext;
++import org.springframework.web.bind.annotation.GetMapping;
++import org.springframework.web.bind.annotation.PostMapping;
++import org.springframework.web.bind.annotation.RequestParam;
++import org.springframework.web.bind.annotation.RestController;
++
++import java.io.IOException;
++
++@SpringBootApplication
++@RestController
++public class SsmApplication {
++
++	public static void main(String[] args) {
++		SpringApplication.run(SsmApplication.class, args);
++	}
++
++	@GetMapping("/Hello")
++	public String Hello(@RequestParam(value = "name",defaultValue = "World") String name){
++
++		return String.format("Hello %s!",name);
++	}
++	@GetMapping("/lookbeans")
++	public String lookbeans(){
++		//beans容器
++		ApplicationContext ctx=new AnnotationConfigApplicationContext(WebbeanConfig.class);
++		Person person=ctx.getBean(Person.class);
++		person.drive();
++		System.out.println("执行完成");
++		return "beans";
++	}
++	@PostMapping("/Useradd")
++	public String Useradd(@RequestParam(value = "id") Long id,@RequestParam(value = "name") String name,@RequestParam(value = "address") String address) throws IOException {
++		System.out.println(id+" "+name+" "+" "+address);
++		SaveData.sava(id, name, address);
++		return "返回成功";
++	}
++
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/User.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/User.java	(date 1595320850500)
+@@ -0,0 +1,72 @@
++package com.uwan.SSM;
++
++import java.io.Serializable;
++
++public class User implements Serializable {
++    private Integer id;
++    private String post;
++    private String wages;
++    private String company;
++    private String workinfo;
++    private String companyinfo;
++
++    public Integer getId() {
++        return id;
++    }
++
++    public void setId(Integer id) {
++        this.id = id;
++    }
++
++    public String getPost() {
++        return post;
++    }
++
++    public void setPost(String post) {
++        this.post = post;
++    }
++
++    public String getWages() {
++        return wages;
++    }
++
++    public void setWages(String wages) {
++        this.wages = wages;
++    }
++
++    public String getCompany() {
++        return company;
++    }
++
++    public void setCompany(String company) {
++        this.company = company;
++    }
++
++    public String getWorkinfo() {
++        return workinfo;
++    }
++
++    public void setWorkinfo(String workinfo) {
++        this.workinfo = workinfo;
++    }
++
++    public String getCompanyinfo() {
++        return companyinfo;
++    }
++
++    public void setCompanyinfo(String companyinfo) {
++        this.companyinfo = companyinfo;
++    }
++
++    @Override
++    public String toString() {
++        return "User{" +
++                "id=" + id +
++                ", post='" + post + '\'' +
++                ", wages='" + wages + '\'' +
++                ", company='" + company + '\'' +
++                ", workinfo='" + workinfo + '\'' +
++                ", companyinfo='" + companyinfo + '\'' +
++                '}';
++    }
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/StudentMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/StudentMapper.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/StudentMapper.java	(date 1595320850500)
+@@ -0,0 +1,10 @@
++package com.uwan.SSM;
++
++import org.apache.ibatis.annotations.Select;
++
++import java.util.List;
++
++public interface StudentMapper {
++    @Select("select id,name,address from student where id<=#{id}")
++    public List<Student> getStudent(Long id);
++}
+Index: ../../../SSM/src/main/resources/Config.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/resources/Config.xml	(date 1595320850500)
++++ ../../../SSM/src/main/resources/Config.xml	(date 1595320850500)
+@@ -0,0 +1,17 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<beans xmlns="http://www.springframework.org/schema/beans"
++       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++       xsi:schemaLocation="http://www.springframework.org/schema/beans
++        https://www.springframework.org/schema/beans/spring-beans.xsd">
++
++    <bean id="..." class="...">
++        <!-- collaborators and configuration for this bean go here -->
++    </bean>
++
++    <bean id="..." class="...">
++        <!-- collaborators and configuration for this bean go here -->
++    </bean>
++
++    <!-- more bean definitions go here -->
++
++</beans>
+\ No newline at end of file
+Index: ../../../SSM/src/main/resources/SqlMapConfig.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/resources/SqlMapConfig.xml	(date 1595320850500)
++++ ../../../SSM/src/main/resources/SqlMapConfig.xml	(date 1595320850500)
+@@ -0,0 +1,29 @@
++<?xml version="1.0" encoding="UTF-8" ?>
++<!DOCTYPE configuration
++        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
++        "http://mybatis.org/dtd/mybatis-3-config.dtd">
++<configuration>
++    <!--    配置环境-->
++    <environments default="mysql">
++        <!--        配置mysql环境-->
++        <environment id="mysql">
++            <!--            配置事务-->
++            <transactionManager type="JDBC"></transactionManager>
++            <!--            配置连接池-->
++            <dataSource type="POOLED">
++                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
++                <property name="url" value="jdbc:mysql://localhost:3306/javaweb?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=GMT%2B8"/>
++                <property name="username" value="root"/>
++                <property name="password" value="zw123"/>
++            </dataSource>
++
++        </environment>
++    </environments>
++
++    <!--    配置映射文件的位置-->
++    <mappers>
++        <mapper resource="IUserDao.xml"></mapper>
++        <mapper class="com.uwan.SSM.StudentMapper"/>
++        <mapper class="com.uwan.SSM.AppBeans.StudentSavaMapper" />
++    </mappers>
++</configuration>
+\ No newline at end of file
+Index: ../../../SSM/src/main/resources/IUserDao.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/resources/IUserDao.xml	(date 1595320850500)
++++ ../../../SSM/src/main/resources/IUserDao.xml	(date 1595320850500)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!DOCTYPE mapper
++        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
++        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
++
++<!--namespace确定方法在哪个Dao接口，id指的是哪个方法,resultType封装至哪-->
++<mapper namespace="main.java.IUserDao">
++    <!--    查询所有操作-->
++    <select id="findAll" resultType="com.uwan.SSM.IUserDao">
++        select * from newscraw limit 10;
++    </select>
++</mapper>
+Index: ../../../SSM/src/main/resources/application_zh_CN.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/resources/application_zh_CN.properties	(date 1595320850500)
++++ ../../../SSM/src/main/resources/application_zh_CN.properties	(date 1595320850500)
+@@ -0,0 +1,10 @@
++home.welcome=Welcome to our <b>fantastic</b> grocery store!
++spring.resources.static-locations=classpath:/static/
++
++spring.thymeleaf.prefix=classpath:/templates/
++
++spring.thymeleaf.suffix=.html
++spirng.thymeleaf.mode=HTML5
++spring.thymeleaf.content-type=text/html
++#set to false for hot refresh
++spring.thymeleaf.cache=false
+\ No newline at end of file
+Index: ../../../SSM/src/main/resources/application.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/resources/application.properties	(date 1595320850500)
++++ ../../../SSM/src/main/resources/application.properties	(date 1595320850500)
+@@ -0,0 +1,9 @@
++
++home.welcome=Welcome to our <b>fantastic</b> grocery store!
++spring.resources.static-locations=classpath:/static/
++spring.thymeleaf.prefix=classpath:/templates/
++spring.thymeleaf.suffix=.html
++spirng.thymeleaf.mode=HTML5
++spring.thymeleaf.content-type=text/html
++#set to false for hot refresh
++spring.thymeleaf.cache=false
+\ No newline at end of file
+Index: ../../../SSM/src/main/resources/static/css/gtvg.css
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/resources/static/css/gtvg.css	(date 1595320850500)
++++ ../../../SSM/src/main/resources/static/css/gtvg.css	(date 1595320850500)
+@@ -0,0 +1,4 @@
++a{
++	text-align: center;
++	color: red;
++}
+\ No newline at end of file
+Index: ../../../SSM/src/main/resources/templates/Useradd.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/resources/templates/Useradd.html	(date 1595320850500)
++++ ../../../SSM/src/main/resources/templates/Useradd.html	(date 1595320850500)
+@@ -0,0 +1,52 @@
++<!DOCTYPE html>
++<html lang="en">
++<head>
++    <meta charset="UTF-8">
++    <title>Useradd</title>
++    <style type="text/css">
++    	body{
++    		display: flex;
++    		justify-content: center;
++    		align-items: center;
++    	}
++    	td{
++    		 border:1px solid red;
++    		width: 473px;	
++    		height: 23px;
++    	}
++    	table{
++    		width: 471px;
++    		/*background-color: #000;*/
++    	}
++    </style>
++</head>
++<body>
++	<div>
++		<form action="/Useradd" method="POST">
++			<table>
++				<tr>
++					<td>
++						id:<input type="text" name="id">
++					</td>
++				</tr>
++				<tr>
++					<td>
++						name:<input type="text" name="name">
++					</td>
++				</tr>
++				<tr>
++					<td>
++						address:<input type="text" name="address">
++					</td>
++				</tr>
++				<tr>
++					<td>
++						<input type="submit" value="提交">
++					</td>
++				</tr>
++			</table>
++		</form>		
++	</div>
++
++</body>
++</html>
+\ No newline at end of file
+Index: ../../../SSM/src/main/resources/templates/HelloHtml.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/resources/templates/HelloHtml.html	(date 1595320850500)
++++ ../../../SSM/src/main/resources/templates/HelloHtml.html	(date 1595320850500)
+@@ -0,0 +1,12 @@
++<!DOCTYPE html>
++<html>
++<head>
++    <meta charset="UTF-8"/>
++
++    <title>Hello World!</title>
++</head>
++<body>
++<h1>Hello.v.2</h1>
++<p data-th-text="${hello}"></p>
++</body>
++</html>
+\ No newline at end of file
+Index: ../../../SSM/src/main/resources/templates/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/resources/templates/index.html	(date 1595320850500)
++++ ../../../SSM/src/main/resources/templates/index.html	(date 1595320850500)
+@@ -0,0 +1,18 @@
++<!DOCTYPE html>
++
++<html>
++
++<head>
++	<title>Good Thymes Virtual Grocery</title>
++	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
++	<link rel="stylesheet" type="text/css" media="all"
++		  href="../static/css/gtvg.css" data-th-href="@{/css/gtvg.css}" />
++</head>
++
++<body>
++
++<p data-th-text="#{home.welcome}">Welcome to our grocery store!</p>
++
++</body>
++
++</html>
+\ No newline at end of file
+Index: ../../../SSM/src/main/resources/templates/home.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/resources/templates/home.html	(date 1595320850500)
++++ ../../../SSM/src/main/resources/templates/home.html	(date 1595320850500)
+@@ -0,0 +1,19 @@
++<!DOCTYPE html>
++
++<html>
++
++<head>
++    <title>Good Thymes Virtual Grocery</title>
++    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
++    <link rel="stylesheet" type="text/css" media="all" href="/css/gtvg.css" />
++</head>
++
++<body>
++
++<p data-th-utext="#{home.welcome}">Welcome to our grocery store!</p>
++<p>Today is: <span data-th-text="${today}">13 February 2011</span></p>
++<a href="index.html" data-th-href="@{/HelloHtml}">跳转</a>
++
++</body>
++
++</html>
+\ No newline at end of file
+Index: ../../../SSM/src/test/java/com/uwan/SSM/SsmApplicationTests.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/test/java/com/uwan/SSM/SsmApplicationTests.java	(date 1595320850500)
++++ ../../../SSM/src/test/java/com/uwan/SSM/SsmApplicationTests.java	(date 1595320850500)
+@@ -0,0 +1,13 @@
++package com.uwan.SSM;
++
++import org.junit.jupiter.api.Test;
++import org.springframework.boot.test.context.SpringBootTest;
++
++@SpringBootTest
++class SsmApplicationTests {
++
++	@Test
++	void contextLoads() {
++	}
++
++}
+Index: ../../../SSM-Demo-master/TencentInterview/.idea/description.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/.idea/description.html	(date 1595320850496)
++++ ../../../SSM-Demo-master/TencentInterview/.idea/description.html	(date 1595320850496)
+@@ -0,0 +1,1 @@
++<html>Simple <b>Java</b> application that includes a class with <code>main()</code> method</html>
+\ No newline at end of file
+Index: ../../../SSM-Demo-master/TencentInterview/.idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/.idea/.gitignore	(date 1595320850496)
++++ ../../../SSM-Demo-master/TencentInterview/.idea/.gitignore	(date 1595320850496)
+@@ -0,0 +1,2 @@
++# Default ignored files
++/workspace.xml
+\ No newline at end of file
+Index: ../../../SSM-Demo-master/TencentInterview/.idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/.idea/misc.xml	(date 1595320850496)
++++ ../../../SSM-Demo-master/TencentInterview/.idea/misc.xml	(date 1595320850496)
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectKey">
++    <option name="state" value="project://e2804f05-5315-4fc6-a121-c522a6c26470" />
++  </component>
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
++    <output url="file://$PROJECT_DIR$/out" />
++  </component>
++</project>
+\ No newline at end of file
+Index: ../../../SSM-Demo-master/TencentInterview/.idea/encodings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/.idea/encodings.xml	(date 1595320850496)
++++ ../../../SSM-Demo-master/TencentInterview/.idea/encodings.xml	(date 1595320850496)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="Encoding">
++    <file url="PROJECT" charset="UTF-8" />
++  </component>
++</project>
+\ No newline at end of file
+Index: ../../../SSM-Demo-master/TencentInterview/.idea/project-template.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/.idea/project-template.xml	(date 1595320850496)
++++ ../../../SSM-Demo-master/TencentInterview/.idea/project-template.xml	(date 1595320850496)
+@@ -0,0 +1,3 @@
++<template>
++  <input-field default="com.company">IJ_BASE_PACKAGE</input-field>
++</template>
+\ No newline at end of file
+Index: ../../../SSM-Demo-master/TencentInterview/.idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/.idea/modules.xml	(date 1595320850496)
++++ ../../../SSM-Demo-master/TencentInterview/.idea/modules.xml	(date 1595320850496)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/TencentInterview.iml" filepath="$PROJECT_DIR$/TencentInterview.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: ../../../SSM-Demo-master/TencentInterview/TencentInterview.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/TencentInterview.iml	(date 1595320850496)
++++ ../../../SSM-Demo-master/TencentInterview/TencentInterview.iml	(date 1595320850496)
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="JAVA_MODULE" version="4">
++  <component name="NewModuleRootManager" inherit-compiler-output="true">
++    <exclude-output />
++    <content url="file://$MODULE_DIR$">
++      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
++
+Index: ../../../SSM-Demo-master/TencentInterview/.idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/.idea/vcs.xml	(date 1595320850496)
++++ ../../../SSM-Demo-master/TencentInterview/.idea/vcs.xml	(date 1595320850496)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: ../../../SSM-Demo-master/TencentInterview/src/com/company/LongestSubstring.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/src/com/company/LongestSubstring.java	(date 1595320850500)
++++ ../../../SSM-Demo-master/TencentInterview/src/com/company/LongestSubstring.java	(date 1595320850500)
+@@ -0,0 +1,26 @@
++package com.company;
++
++public class LongestSubstring {
++    public String longestPalindrome(String s) {
++        if (s == null || s.length() < 1) return "";
++        int start = 0, end = 0;
++        for (int i = 0; i < s.length(); i++) {
++            int len1 = Center(s, i, i);
++            int len2 = Center(s, i, i + 1);
++            int len = Math.max(len1, len2);
++            if (len > end - start) {
++                start = i - (len - 1) / 2;
++                end = i + len / 2;
++            }
++        }
++        return s.substring(start, end + 1);
++    }
++    private int Center(String s, int l, int r) {
++        int L = l, R = r;
++        while (L >= 0 && R < s.length() && s.charAt(L) == s.charAt(R)) {
++            L--;
++            R++;
++        }
++        return R - L - 1;
++    }
++}
+Index: ../../../SSM-Demo-master/TencentInterview/src/com/company/LongestCommon.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/src/com/company/LongestCommon.java	(date 1595320850500)
++++ ../../../SSM-Demo-master/TencentInterview/src/com/company/LongestCommon.java	(date 1595320850500)
+@@ -0,0 +1,64 @@
++package com.company;
++
++public class LongestCommon {
++    public String longestCommonPrefix(String[] strs) {
++        if (strs.length == 0) {
++            return "";
++        }
++        String gzzfc = strs[0];
++        for (int i = 0; i < strs.length; i++) {
++            while (strs[i].indexOf(gzzfc) != 0) {
++                gzzfc = gzzfc.substring(0, gzzfc.length() - 1);
++//                System.out.println(gzzfc);
++                if (gzzfc.length() == 0) {
++                    return "";
++                }
++            }
++        }
++        return gzzfc;
++    }
++
++    public String longestCommonPrefix2(String[] strs) {
++        if (strs.length == 0) {
++            return "";
++        }
++        if (strs[0].isEmpty()) {
++            return "";
++        }
++        if (strs.length == 1) {
++            return strs[0];
++        }
++        String gzzfc = strs[0].substring(0, 1);
++        int i = 0;
++        while (true) {
++            if (strs[i].indexOf(gzzfc) == 0) {
++                if (i < strs.length - 1) {
++                    i++;
++                    continue;
++                } else {
++                    try {
++                        gzzfc = strs[0].substring(0, gzzfc.length() + 1);
++                        i = 0;
++                        continue;
++                    } catch (StringIndexOutOfBoundsException e) {
++                        break;
++                    }
++                }
++            }
++            if (gzzfc.equals(strs[0].substring(0,1))){
++                gzzfc="";
++            }else {
++                gzzfc=strs[0].substring(0,gzzfc.length()-1);
++            }
++            break;
++        }
++        return gzzfc;
++    }
++
++    public static void main(String[] args) {
++        String s = new LongestCommon().longestCommonPrefix(new String[]{"flower","flow","flight"});
++        String s2 = new LongestCommon().longestCommonPrefix2(new String[]{"dog","racecar","car"});
++        System.out.println("方法1:"+s);
++        System.out.println("方法2:"+s2);
++    }
++}
+Index: ../../../SSM-Demo-master/TencentInterview/src/com/company/Median.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/src/com/company/Median.java	(date 1595320850500)
++++ ../../../SSM-Demo-master/TencentInterview/src/com/company/Median.java	(date 1595320850500)
+@@ -0,0 +1,38 @@
++package com.company;
++
++import java.util.Arrays;
++
++public class Median {
++    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
++        //creat a array to include them
++        int[] myarray = new int[nums1.length+nums2.length];
++        int index=0;
++
++        for(int i=0;i<nums1.length;i++){
++            myarray[index] = nums1[i];
++            index++;
++        }
++        for(int j=0;j<nums2.length;j++){
++            myarray[index]=nums2[j];
++            index++;
++        }
++        return iszhong(myarray);
++    }
++
++    public static double iszhong(int[] num){
++        int index1,index2;
++        int num1,num2;
++        Arrays.sort(num);
++        if(num.length%2==0){
++            index1=num.length/2;
++            index2=index1-1;
++            num1=num[index1];
++            num2=num[index2];
++            return (double)(num1+num2)/2;
++        }
++        else{
++            index1=(num.length-1)/2;
++            return num[index1];
++        }
++    }
++}
+Index: ../../../SSM-Demo-master/TencentInterview/src/com/company/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/src/com/company/Main.java	(date 1595320850500)
++++ ../../../SSM-Demo-master/TencentInterview/src/com/company/Main.java	(date 1595320850500)
+@@ -0,0 +1,8 @@
++package com.company;
++
++public class Main {
++
++    public static void main(String[] args) {
++	// write your code here
++    }
++}
+Index: ../../../SSM-Demo-master/TencentInterview/src/com/company/SumTwonum.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/src/com/company/SumTwonum.java	(date 1595320850500)
++++ ../../../SSM-Demo-master/TencentInterview/src/com/company/SumTwonum.java	(date 1595320850500)
+@@ -0,0 +1,16 @@
++package com.company;
++
++public class SumTwonum {
++    public int[] twoSum(int[] nums, int target) {
++        int[] m=new int[2];
++        for (int i=0;i<nums.length-1;i++){
++            for (int j=i+1;j<nums.length;j++){
++                if (nums[i]+nums[j]==target){
++                    m[0]=i;
++                    m[1]=j;
++                }
++            }
++        }
++        return m;
++    }
++}
+Index: ../../../SSM-Demo-master/TencentInterview/src/com/company/StringConver.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM-Demo-master/TencentInterview/src/com/company/StringConver.java	(date 1595320850500)
++++ ../../../SSM-Demo-master/TencentInterview/src/com/company/StringConver.java	(date 1595320850500)
+@@ -0,0 +1,50 @@
++package com.company;
++
++public class StringConver {
++    public int myAtoi(String str) {
++        int flag=1;
++        int Intnum;
++        StringBuilder intstr=new StringBuilder();
++        str=str.trim();
++        if (str.isEmpty()){
++            return 0;
++        }
++        if (str.charAt(0) == '-') {
++            flag = -1;
++            str = str.substring(1, str.length());  // 跳过符号位，可不写第二参数
++        } else if (str.charAt(0) == '+') {
++            str = str.substring(1, str.length());  // 跳过符号位，可不写第二参数
++        } else if (!(str.charAt(0) >= '0' && str.charAt(0) <= '9')) {  // 如果开始非空字符不为符号或数字，则直接返回 0
++            return 0;
++        }
++        if (str.isEmpty()){
++            return 0;
++        }
++        if (str.charAt(0)<'0' || str.charAt(0)>'9'){
++            return 0;
++        }
++        for (int i=0;i<str.length();i++){
++            if (str.charAt(i)>='0' && str.charAt(i)<='9'){
++                intstr.append(str.charAt(i));
++            }else{
++                break;
++            }
++        }
++        String ins=""+intstr;
++
++        try {
++            Intnum = flag*Integer.parseInt(ins);
++        }catch (NumberFormatException e){
++            if (flag==1){
++                return Integer.MAX_VALUE;
++            }else {
++                return Integer.MIN_VALUE;
++            }
++        }
++        return Intnum;
++    }
++
++    public static void main(String[] args) {
++        System.out.println(new StringConver().myAtoi("4193 with words"));
++    }
++}
+Index: ../../../SSM/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/.gitignore	(date 1595320850500)
++++ ../../../SSM/.gitignore	(date 1595320850500)
+@@ -0,0 +1,31 @@
++HELP.md
++target/
++!.mvn/wrapper/maven-wrapper.jar
++!**/src/main/**
++!**/src/test/**
++
++### STS ###
++.apt_generated
++.classpath
++.factorypath
++.project
++.settings
++.springBeans
++.sts4-cache
++
++### IntelliJ IDEA ###
++.idea
++*.iws
++*.iml
++*.ipr
++
++### NetBeans ###
++/nbproject/private/
++/nbbuild/
++/dist/
++/nbdist/
++/.nb-gradle/
++build/
++
++### VS Code ###
++.vscode/
+Index: ../../../SSM/.mvn/wrapper/MavenWrapperDownloader.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/.mvn/wrapper/MavenWrapperDownloader.java	(date 1595320850500)
++++ ../../../SSM/.mvn/wrapper/MavenWrapperDownloader.java	(date 1595320850500)
+@@ -0,0 +1,117 @@
++/*
++ * Copyright 2007-present the original author or authors.
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      https://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++import java.net.*;
++import java.io.*;
++import java.nio.channels.*;
++import java.util.Properties;
++
++public class MavenWrapperDownloader {
++
++    private static final String WRAPPER_VERSION = "0.5.6";
++    /**
++     * Default URL to download the maven-wrapper.jar from, if no 'downloadUrl' is provided.
++     */
++    private static final String DEFAULT_DOWNLOAD_URL = "https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/"
++        + WRAPPER_VERSION + "/maven-wrapper-" + WRAPPER_VERSION + ".jar";
++
++    /**
++     * Path to the maven-wrapper.properties file, which might contain a downloadUrl property to
++     * use instead of the default one.
++     */
++    private static final String MAVEN_WRAPPER_PROPERTIES_PATH =
++            ".mvn/wrapper/maven-wrapper.properties";
++
++    /**
++     * Path where the maven-wrapper.jar will be saved to.
++     */
++    private static final String MAVEN_WRAPPER_JAR_PATH =
++            ".mvn/wrapper/maven-wrapper.jar";
++
++    /**
++     * Name of the property which should be used to override the default download url for the wrapper.
++     */
++    private static final String PROPERTY_NAME_WRAPPER_URL = "wrapperUrl";
++
++    public static void main(String args[]) {
++        System.out.println("- Downloader started");
++        File baseDirectory = new File(args[0]);
++        System.out.println("- Using base directory: " + baseDirectory.getAbsolutePath());
++
++        // If the maven-wrapper.properties exists, read it and check if it contains a custom
++        // wrapperUrl parameter.
++        File mavenWrapperPropertyFile = new File(baseDirectory, MAVEN_WRAPPER_PROPERTIES_PATH);
++        String url = DEFAULT_DOWNLOAD_URL;
++        if(mavenWrapperPropertyFile.exists()) {
++            FileInputStream mavenWrapperPropertyFileInputStream = null;
++            try {
++                mavenWrapperPropertyFileInputStream = new FileInputStream(mavenWrapperPropertyFile);
++                Properties mavenWrapperProperties = new Properties();
++                mavenWrapperProperties.load(mavenWrapperPropertyFileInputStream);
++                url = mavenWrapperProperties.getProperty(PROPERTY_NAME_WRAPPER_URL, url);
++            } catch (IOException e) {
++                System.out.println("- ERROR loading '" + MAVEN_WRAPPER_PROPERTIES_PATH + "'");
++            } finally {
++                try {
++                    if(mavenWrapperPropertyFileInputStream != null) {
++                        mavenWrapperPropertyFileInputStream.close();
++                    }
++                } catch (IOException e) {
++                    // Ignore ...
++                }
++            }
++        }
++        System.out.println("- Downloading from: " + url);
++
++        File outputFile = new File(baseDirectory.getAbsolutePath(), MAVEN_WRAPPER_JAR_PATH);
++        if(!outputFile.getParentFile().exists()) {
++            if(!outputFile.getParentFile().mkdirs()) {
++                System.out.println(
++                        "- ERROR creating output directory '" + outputFile.getParentFile().getAbsolutePath() + "'");
++            }
++        }
++        System.out.println("- Downloading to: " + outputFile.getAbsolutePath());
++        try {
++            downloadFileFromURL(url, outputFile);
++            System.out.println("Done");
++            System.exit(0);
++        } catch (Throwable e) {
++            System.out.println("- Error downloading");
++            e.printStackTrace();
++            System.exit(1);
++        }
++    }
++
++    private static void downloadFileFromURL(String urlString, File destination) throws Exception {
++        if (System.getenv("MVNW_USERNAME") != null && System.getenv("MVNW_PASSWORD") != null) {
++            String username = System.getenv("MVNW_USERNAME");
++            char[] password = System.getenv("MVNW_PASSWORD").toCharArray();
++            Authenticator.setDefault(new Authenticator() {
++                @Override
++                protected PasswordAuthentication getPasswordAuthentication() {
++                    return new PasswordAuthentication(username, password);
++                }
++            });
++        }
++        URL website = new URL(urlString);
++        ReadableByteChannel rbc;
++        rbc = Channels.newChannel(website.openStream());
++        FileOutputStream fos = new FileOutputStream(destination);
++        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
++        fos.close();
++        rbc.close();
++    }
++
++}
+Index: ../../../SSM/mvnw
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/mvnw	(date 1595320850500)
++++ ../../../SSM/mvnw	(date 1595320850500)
+@@ -0,0 +1,310 @@
++#!/bin/sh
++# ----------------------------------------------------------------------------
++# Licensed to the Apache Software Foundation (ASF) under one
++# or more contributor license agreements.  See the NOTICE file
++# distributed with this work for additional information
++# regarding copyright ownership.  The ASF licenses this file
++# to you under the Apache License, Version 2.0 (the
++# "License"); you may not use this file except in compliance
++# with the License.  You may obtain a copy of the License at
++#
++#    https://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing,
++# software distributed under the License is distributed on an
++# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++# KIND, either express or implied.  See the License for the
++# specific language governing permissions and limitations
++# under the License.
++# ----------------------------------------------------------------------------
++
++# ----------------------------------------------------------------------------
++# Maven Start Up Batch script
++#
++# Required ENV vars:
++# ------------------
++#   JAVA_HOME - location of a JDK home dir
++#
++# Optional ENV vars
++# -----------------
++#   M2_HOME - location of maven2's installed home dir
++#   MAVEN_OPTS - parameters passed to the Java VM when running Maven
++#     e.g. to debug Maven itself, use
++#       set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
++#   MAVEN_SKIP_RC - flag to disable loading of mavenrc files
++# ----------------------------------------------------------------------------
++
++if [ -z "$MAVEN_SKIP_RC" ] ; then
++
++  if [ -f /etc/mavenrc ] ; then
++    . /etc/mavenrc
++  fi
++
++  if [ -f "$HOME/.mavenrc" ] ; then
++    . "$HOME/.mavenrc"
++  fi
++
++fi
++
++# OS specific support.  $var _must_ be set to either true or false.
++cygwin=false;
++darwin=false;
++mingw=false
++case "`uname`" in
++  CYGWIN*) cygwin=true ;;
++  MINGW*) mingw=true;;
++  Darwin*) darwin=true
++    # Use /usr/libexec/java_home if available, otherwise fall back to /Library/Java/Home
++    # See https://developer.apple.com/library/mac/qa/qa1170/_index.html
++    if [ -z "$JAVA_HOME" ]; then
++      if [ -x "/usr/libexec/java_home" ]; then
++        export JAVA_HOME="`/usr/libexec/java_home`"
++      else
++        export JAVA_HOME="/Library/Java/Home"
++      fi
++    fi
++    ;;
++esac
++
++if [ -z "$JAVA_HOME" ] ; then
++  if [ -r /etc/gentoo-release ] ; then
++    JAVA_HOME=`java-config --jre-home`
++  fi
++fi
++
++if [ -z "$M2_HOME" ] ; then
++  ## resolve links - $0 may be a link to maven's home
++  PRG="$0"
++
++  # need this for relative symlinks
++  while [ -h "$PRG" ] ; do
++    ls=`ls -ld "$PRG"`
++    link=`expr "$ls" : '.*-> \(.*\)$'`
++    if expr "$link" : '/.*' > /dev/null; then
++      PRG="$link"
++    else
++      PRG="`dirname "$PRG"`/$link"
++    fi
++  done
++
++  saveddir=`pwd`
++
++  M2_HOME=`dirname "$PRG"`/..
++
++  # make it fully qualified
++  M2_HOME=`cd "$M2_HOME" && pwd`
++
++  cd "$saveddir"
++  # echo Using m2 at $M2_HOME
++fi
++
++# For Cygwin, ensure paths are in UNIX format before anything is touched
++if $cygwin ; then
++  [ -n "$M2_HOME" ] &&
++    M2_HOME=`cygpath --unix "$M2_HOME"`
++  [ -n "$JAVA_HOME" ] &&
++    JAVA_HOME=`cygpath --unix "$JAVA_HOME"`
++  [ -n "$CLASSPATH" ] &&
++    CLASSPATH=`cygpath --path --unix "$CLASSPATH"`
++fi
++
++# For Mingw, ensure paths are in UNIX format before anything is touched
++if $mingw ; then
++  [ -n "$M2_HOME" ] &&
++    M2_HOME="`(cd "$M2_HOME"; pwd)`"
++  [ -n "$JAVA_HOME" ] &&
++    JAVA_HOME="`(cd "$JAVA_HOME"; pwd)`"
++fi
++
++if [ -z "$JAVA_HOME" ]; then
++  javaExecutable="`which javac`"
++  if [ -n "$javaExecutable" ] && ! [ "`expr \"$javaExecutable\" : '\([^ ]*\)'`" = "no" ]; then
++    # readlink(1) is not available as standard on Solaris 10.
++    readLink=`which readlink`
++    if [ ! `expr "$readLink" : '\([^ ]*\)'` = "no" ]; then
++      if $darwin ; then
++        javaHome="`dirname \"$javaExecutable\"`"
++        javaExecutable="`cd \"$javaHome\" && pwd -P`/javac"
++      else
++        javaExecutable="`readlink -f \"$javaExecutable\"`"
++      fi
++      javaHome="`dirname \"$javaExecutable\"`"
++      javaHome=`expr "$javaHome" : '\(.*\)/bin'`
++      JAVA_HOME="$javaHome"
++      export JAVA_HOME
++    fi
++  fi
++fi
++
++if [ -z "$JAVACMD" ] ; then
++  if [ -n "$JAVA_HOME"  ] ; then
++    if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
++      # IBM's JDK on AIX uses strange locations for the executables
++      JAVACMD="$JAVA_HOME/jre/sh/java"
++    else
++      JAVACMD="$JAVA_HOME/bin/java"
++    fi
++  else
++    JAVACMD="`which java`"
++  fi
++fi
++
++if [ ! -x "$JAVACMD" ] ; then
++  echo "Error: JAVA_HOME is not defined correctly." >&2
++  echo "  We cannot execute $JAVACMD" >&2
++  exit 1
++fi
++
++if [ -z "$JAVA_HOME" ] ; then
++  echo "Warning: JAVA_HOME environment variable is not set."
++fi
++
++CLASSWORLDS_LAUNCHER=org.codehaus.plexus.classworlds.launcher.Launcher
++
++# traverses directory structure from process work directory to filesystem root
++# first directory with .mvn subdirectory is considered project base directory
++find_maven_basedir() {
++
++  if [ -z "$1" ]
++  then
++    echo "Path not specified to find_maven_basedir"
++    return 1
++  fi
++
++  basedir="$1"
++  wdir="$1"
++  while [ "$wdir" != '/' ] ; do
++    if [ -d "$wdir"/.mvn ] ; then
++      basedir=$wdir
++      break
++    fi
++    # workaround for JBEAP-8937 (on Solaris 10/Sparc)
++    if [ -d "${wdir}" ]; then
++      wdir=`cd "$wdir/.."; pwd`
++    fi
++    # end of workaround
++  done
++  echo "${basedir}"
++}
++
++# concatenates all lines of a file
++concat_lines() {
++  if [ -f "$1" ]; then
++    echo "$(tr -s '\n' ' ' < "$1")"
++  fi
++}
++
++BASE_DIR=`find_maven_basedir "$(pwd)"`
++if [ -z "$BASE_DIR" ]; then
++  exit 1;
++fi
++
++##########################################################################################
++# Extension to allow automatically downloading the maven-wrapper.jar from Maven-central
++# This allows using the maven wrapper in projects that prohibit checking in binary data.
++##########################################################################################
++if [ -r "$BASE_DIR/.mvn/wrapper/maven-wrapper.jar" ]; then
++    if [ "$MVNW_VERBOSE" = true ]; then
++      echo "Found .mvn/wrapper/maven-wrapper.jar"
++    fi
++else
++    if [ "$MVNW_VERBOSE" = true ]; then
++      echo "Couldn't find .mvn/wrapper/maven-wrapper.jar, downloading it ..."
++    fi
++    if [ -n "$MVNW_REPOURL" ]; then
++      jarUrl="$MVNW_REPOURL/io/takari/maven-wrapper/0.5.6/maven-wrapper-0.5.6.jar"
++    else
++      jarUrl="https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/0.5.6/maven-wrapper-0.5.6.jar"
++    fi
++    while IFS="=" read key value; do
++      case "$key" in (wrapperUrl) jarUrl="$value"; break ;;
++      esac
++    done < "$BASE_DIR/.mvn/wrapper/maven-wrapper.properties"
++    if [ "$MVNW_VERBOSE" = true ]; then
++      echo "Downloading from: $jarUrl"
++    fi
++    wrapperJarPath="$BASE_DIR/.mvn/wrapper/maven-wrapper.jar"
++    if $cygwin; then
++      wrapperJarPath=`cygpath --path --windows "$wrapperJarPath"`
++    fi
++
++    if command -v wget > /dev/null; then
++        if [ "$MVNW_VERBOSE" = true ]; then
++          echo "Found wget ... using wget"
++        fi
++        if [ -z "$MVNW_USERNAME" ] || [ -z "$MVNW_PASSWORD" ]; then
++            wget "$jarUrl" -O "$wrapperJarPath"
++        else
++            wget --http-user=$MVNW_USERNAME --http-password=$MVNW_PASSWORD "$jarUrl" -O "$wrapperJarPath"
++        fi
++    elif command -v curl > /dev/null; then
++        if [ "$MVNW_VERBOSE" = true ]; then
++          echo "Found curl ... using curl"
++        fi
++        if [ -z "$MVNW_USERNAME" ] || [ -z "$MVNW_PASSWORD" ]; then
++            curl -o "$wrapperJarPath" "$jarUrl" -f
++        else
++            curl --user $MVNW_USERNAME:$MVNW_PASSWORD -o "$wrapperJarPath" "$jarUrl" -f
++        fi
++
++    else
++        if [ "$MVNW_VERBOSE" = true ]; then
++          echo "Falling back to using Java to download"
++        fi
++        javaClass="$BASE_DIR/.mvn/wrapper/MavenWrapperDownloader.java"
++        # For Cygwin, switch paths to Windows format before running javac
++        if $cygwin; then
++          javaClass=`cygpath --path --windows "$javaClass"`
++        fi
++        if [ -e "$javaClass" ]; then
++            if [ ! -e "$BASE_DIR/.mvn/wrapper/MavenWrapperDownloader.class" ]; then
++                if [ "$MVNW_VERBOSE" = true ]; then
++                  echo " - Compiling MavenWrapperDownloader.java ..."
++                fi
++                # Compiling the Java class
++                ("$JAVA_HOME/bin/javac" "$javaClass")
++            fi
++            if [ -e "$BASE_DIR/.mvn/wrapper/MavenWrapperDownloader.class" ]; then
++                # Running the downloader
++                if [ "$MVNW_VERBOSE" = true ]; then
++                  echo " - Running MavenWrapperDownloader.java ..."
++                fi
++                ("$JAVA_HOME/bin/java" -cp .mvn/wrapper MavenWrapperDownloader "$MAVEN_PROJECTBASEDIR")
++            fi
++        fi
++    fi
++fi
++##########################################################################################
++# End of extension
++##########################################################################################
++
++export MAVEN_PROJECTBASEDIR=${MAVEN_BASEDIR:-"$BASE_DIR"}
++if [ "$MVNW_VERBOSE" = true ]; then
++  echo $MAVEN_PROJECTBASEDIR
++fi
++MAVEN_OPTS="$(concat_lines "$MAVEN_PROJECTBASEDIR/.mvn/jvm.config") $MAVEN_OPTS"
++
++# For Cygwin, switch paths to Windows format before running java
++if $cygwin; then
++  [ -n "$M2_HOME" ] &&
++    M2_HOME=`cygpath --path --windows "$M2_HOME"`
++  [ -n "$JAVA_HOME" ] &&
++    JAVA_HOME=`cygpath --path --windows "$JAVA_HOME"`
++  [ -n "$CLASSPATH" ] &&
++    CLASSPATH=`cygpath --path --windows "$CLASSPATH"`
++  [ -n "$MAVEN_PROJECTBASEDIR" ] &&
++    MAVEN_PROJECTBASEDIR=`cygpath --path --windows "$MAVEN_PROJECTBASEDIR"`
++fi
++
++# Provide a "standardized" way to retrieve the CLI args that will
++# work with both Windows and non-Windows executions.
++MAVEN_CMD_LINE_ARGS="$MAVEN_CONFIG $@"
++export MAVEN_CMD_LINE_ARGS
++
++WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
++
++exec "$JAVACMD" \
++  $MAVEN_OPTS \
++  -classpath "$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar" \
++  "-Dmaven.home=${M2_HOME}" "-Dmaven.multiModuleProjectDirectory=${MAVEN_PROJECTBASEDIR}" \
++  ${WRAPPER_LAUNCHER} $MAVEN_CONFIG "$@"
+Index: ../../../SSM/.mvn/wrapper/maven-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/.mvn/wrapper/maven-wrapper.properties	(date 1595320850500)
++++ ../../../SSM/.mvn/wrapper/maven-wrapper.properties	(date 1595320850500)
+@@ -0,0 +1,2 @@
++distributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.6.3/apache-maven-3.6.3-bin.zip
++wrapperUrl=https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/0.5.6/maven-wrapper-0.5.6.jar
+Index: ../../../SSM/pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/pom.xml	(date 1595320850500)
++++ ../../../SSM/pom.xml	(date 1595320850500)
+@@ -0,0 +1,100 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
++	<modelVersion>4.0.0</modelVersion>
++	<parent>
++		<groupId>org.springframework.boot</groupId>
++		<artifactId>spring-boot-starter-parent</artifactId>
++		<version>2.2.6.RELEASE</version>
++		<relativePath/> <!-- lookup parent from repository -->
++	</parent>
++	<groupId>com.uwan</groupId>
++	<artifactId>SSM</artifactId>
++	<version>0.0.1-SNAPSHOT</version>
++	<name>SSM</name>
++	<description>Demo project for Spring Boot</description>
++
++	<properties>
++		<java.version>11</java.version>
++	</properties>
++
++	<dependencies>
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-web</artifactId>
++		</dependency>
++
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-test</artifactId>
++			<scope>test</scope>
++			<exclusions>
++				<exclusion>
++					<groupId>org.junit.vintage</groupId>
++					<artifactId>junit-vintage-engine</artifactId>
++				</exclusion>
++			</exclusions>
++		</dependency>
++
++
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-thymeleaf</artifactId>
++		</dependency>
++
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-devtools</artifactId>
++			<optional>true</optional>
++		</dependency>
++
++		<dependency>
++			<groupId>org.mybatis</groupId>
++			<artifactId>mybatis</artifactId>
++			<version>3.4.5</version>
++		</dependency>
++
++		<dependency>
++			<groupId>mysql</groupId>
++			<artifactId>mysql-connector-java</artifactId>
++			<version>8.0.11</version>
++		</dependency>
++
++		<dependency>
++			<groupId>log4j</groupId>
++			<artifactId>log4j</artifactId>
++			<version>1.2.12</version>
++		</dependency>
++		<dependency>
++			<groupId>junit</groupId>
++			<artifactId>junit</artifactId>
++		</dependency>
++
++		<dependency>
++			<groupId>org.springframework.boot</groupId>
++			<artifactId>spring-boot-starter-thymeleaf</artifactId>
++		</dependency>
++
++		<dependency>
++			<groupId>org.aspectj</groupId>
++			<artifactId>aspectjrt</artifactId>
++			<version>1.8.9</version>
++		</dependency>
++		<dependency>
++			<groupId>org.aspectj</groupId>
++			<artifactId>aspectjweaver</artifactId>
++			<version>1.7.4</version>
++		</dependency>
++
++	</dependencies>
++
++	<build>
++		<plugins>
++			<plugin>
++				<groupId>org.springframework.boot</groupId>
++				<artifactId>spring-boot-maven-plugin</artifactId>
++			</plugin>
++		</plugins>
++	</build>
++
++</project>
+Index: ../../../SSM/mvnw.cmd
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/mvnw.cmd	(date 1595320850500)
++++ ../../../SSM/mvnw.cmd	(date 1595320850500)
+@@ -0,0 +1,182 @@
++@REM ----------------------------------------------------------------------------
++@REM Licensed to the Apache Software Foundation (ASF) under one
++@REM or more contributor license agreements.  See the NOTICE file
++@REM distributed with this work for additional information
++@REM regarding copyright ownership.  The ASF licenses this file
++@REM to you under the Apache License, Version 2.0 (the
++@REM "License"); you may not use this file except in compliance
++@REM with the License.  You may obtain a copy of the License at
++@REM
++@REM    https://www.apache.org/licenses/LICENSE-2.0
++@REM
++@REM Unless required by applicable law or agreed to in writing,
++@REM software distributed under the License is distributed on an
++@REM "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
++@REM KIND, either express or implied.  See the License for the
++@REM specific language governing permissions and limitations
++@REM under the License.
++@REM ----------------------------------------------------------------------------
++
++@REM ----------------------------------------------------------------------------
++@REM Maven Start Up Batch script
++@REM
++@REM Required ENV vars:
++@REM JAVA_HOME - location of a JDK home dir
++@REM
++@REM Optional ENV vars
++@REM M2_HOME - location of maven2's installed home dir
++@REM MAVEN_BATCH_ECHO - set to 'on' to enable the echoing of the batch commands
++@REM MAVEN_BATCH_PAUSE - set to 'on' to wait for a keystroke before ending
++@REM MAVEN_OPTS - parameters passed to the Java VM when running Maven
++@REM     e.g. to debug Maven itself, use
++@REM set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
++@REM MAVEN_SKIP_RC - flag to disable loading of mavenrc files
++@REM ----------------------------------------------------------------------------
++
++@REM Begin all REM lines with '@' in case MAVEN_BATCH_ECHO is 'on'
++@echo off
++@REM set title of command window
++title %0
++@REM enable echoing by setting MAVEN_BATCH_ECHO to 'on'
++@if "%MAVEN_BATCH_ECHO%" == "on"  echo %MAVEN_BATCH_ECHO%
++
++@REM set %HOME% to equivalent of $HOME
++if "%HOME%" == "" (set "HOME=%HOMEDRIVE%%HOMEPATH%")
++
++@REM Execute a user defined script before this one
++if not "%MAVEN_SKIP_RC%" == "" goto skipRcPre
++@REM check for pre script, once with legacy .bat ending and once with .cmd ending
++if exist "%HOME%\mavenrc_pre.bat" call "%HOME%\mavenrc_pre.bat"
++if exist "%HOME%\mavenrc_pre.cmd" call "%HOME%\mavenrc_pre.cmd"
++:skipRcPre
++
++@setlocal
++
++set ERROR_CODE=0
++
++@REM To isolate internal variables from possible post scripts, we use another setlocal
++@setlocal
++
++@REM ==== START VALIDATION ====
++if not "%JAVA_HOME%" == "" goto OkJHome
++
++echo.
++echo Error: JAVA_HOME not found in your environment. >&2
++echo Please set the JAVA_HOME variable in your environment to match the >&2
++echo location of your Java installation. >&2
++echo.
++goto error
++
++:OkJHome
++if exist "%JAVA_HOME%\bin\java.exe" goto init
++
++echo.
++echo Error: JAVA_HOME is set to an invalid directory. >&2
++echo JAVA_HOME = "%JAVA_HOME%" >&2
++echo Please set the JAVA_HOME variable in your environment to match the >&2
++echo location of your Java installation. >&2
++echo.
++goto error
++
++@REM ==== END VALIDATION ====
++
++:init
++
++@REM Find the project base dir, i.e. the directory that contains the folder ".mvn".
++@REM Fallback to current working directory if not found.
++
++set MAVEN_PROJECTBASEDIR=%MAVEN_BASEDIR%
++IF NOT "%MAVEN_PROJECTBASEDIR%"=="" goto endDetectBaseDir
++
++set EXEC_DIR=%CD%
++set WDIR=%EXEC_DIR%
++:findBaseDir
++IF EXIST "%WDIR%"\.mvn goto baseDirFound
++cd ..
++IF "%WDIR%"=="%CD%" goto baseDirNotFound
++set WDIR=%CD%
++goto findBaseDir
++
++:baseDirFound
++set MAVEN_PROJECTBASEDIR=%WDIR%
++cd "%EXEC_DIR%"
++goto endDetectBaseDir
++
++:baseDirNotFound
++set MAVEN_PROJECTBASEDIR=%EXEC_DIR%
++cd "%EXEC_DIR%"
++
++:endDetectBaseDir
++
++IF NOT EXIST "%MAVEN_PROJECTBASEDIR%\.mvn\jvm.config" goto endReadAdditionalConfig
++
++@setlocal EnableExtensions EnableDelayedExpansion
++for /F "usebackq delims=" %%a in ("%MAVEN_PROJECTBASEDIR%\.mvn\jvm.config") do set JVM_CONFIG_MAVEN_PROPS=!JVM_CONFIG_MAVEN_PROPS! %%a
++@endlocal & set JVM_CONFIG_MAVEN_PROPS=%JVM_CONFIG_MAVEN_PROPS%
++
++:endReadAdditionalConfig
++
++SET MAVEN_JAVA_EXE="%JAVA_HOME%\bin\java.exe"
++set WRAPPER_JAR="%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.jar"
++set WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
++
++set DOWNLOAD_URL="https://repo.maven.apache.org/maven2/io/takari/maven-wrapper/0.5.6/maven-wrapper-0.5.6.jar"
++
++FOR /F "tokens=1,2 delims==" %%A IN ("%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.properties") DO (
++    IF "%%A"=="wrapperUrl" SET DOWNLOAD_URL=%%B
++)
++
++@REM Extension to allow automatically downloading the maven-wrapper.jar from Maven-central
++@REM This allows using the maven wrapper in projects that prohibit checking in binary data.
++if exist %WRAPPER_JAR% (
++    if "%MVNW_VERBOSE%" == "true" (
++        echo Found %WRAPPER_JAR%
++    )
++) else (
++    if not "%MVNW_REPOURL%" == "" (
++        SET DOWNLOAD_URL="%MVNW_REPOURL%/io/takari/maven-wrapper/0.5.6/maven-wrapper-0.5.6.jar"
++    )
++    if "%MVNW_VERBOSE%" == "true" (
++        echo Couldn't find %WRAPPER_JAR%, downloading it ...
++        echo Downloading from: %DOWNLOAD_URL%
++    )
++
++    powershell -Command "&{"^
++		"$webclient = new-object System.Net.WebClient;"^
++		"if (-not ([string]::IsNullOrEmpty('%MVNW_USERNAME%') -and [string]::IsNullOrEmpty('%MVNW_PASSWORD%'))) {"^
++		"$webclient.Credentials = new-object System.Net.NetworkCredential('%MVNW_USERNAME%', '%MVNW_PASSWORD%');"^
++		"}"^
++		"[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; $webclient.DownloadFile('%DOWNLOAD_URL%', '%WRAPPER_JAR%')"^
++		"}"
++    if "%MVNW_VERBOSE%" == "true" (
++        echo Finished downloading %WRAPPER_JAR%
++    )
++)
++@REM End of extension
++
++@REM Provide a "standardized" way to retrieve the CLI args that will
++@REM work with both Windows and non-Windows executions.
++set MAVEN_CMD_LINE_ARGS=%*
++
++%MAVEN_JAVA_EXE% %JVM_CONFIG_MAVEN_PROPS% %MAVEN_OPTS% %MAVEN_DEBUG_OPTS% -classpath %WRAPPER_JAR% "-Dmaven.multiModuleProjectDirectory=%MAVEN_PROJECTBASEDIR%" %WRAPPER_LAUNCHER% %MAVEN_CONFIG% %*
++if ERRORLEVEL 1 goto error
++goto end
++
++:error
++set ERROR_CODE=1
++
++:end
++@endlocal & set ERROR_CODE=%ERROR_CODE%
++
++if not "%MAVEN_SKIP_RC%" == "" goto skipRcPost
++@REM check for post script, once with legacy .bat ending and once with .cmd ending
++if exist "%HOME%\mavenrc_post.bat" call "%HOME%\mavenrc_post.bat"
++if exist "%HOME%\mavenrc_post.cmd" call "%HOME%\mavenrc_post.cmd"
++:skipRcPost
++
++@REM pause the script if MAVEN_BATCH_PAUSE is set to 'on'
++if "%MAVEN_BATCH_PAUSE%" == "on" pause
++
++if "%MAVEN_TERMINATE_CMD%" == "on" exit %ERROR_CODE%
++
++exit /B %ERROR_CODE%
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Onecar.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Onecar.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Onecar.java	(date 1595320850500)
+@@ -0,0 +1,8 @@
++package com.uwan.SSM.AppBeans;
++
++public interface Onecar {
++    public void f1();
++    public void f2();
++    public void f3();
++
++}
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"VcsDirectoryMappings\">\n    <mapping directory=\"$PROJECT_DIR$/../../..\" vcs=\"Git\" />\n    <mapping directory=\"$PROJECT_DIR$/../..\" vcs=\"Git\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/vcs.xml	(revision 70156520312dcb59a9fc972c9cc4e4ceb09d6053)
++++ .idea/vcs.xml	(date 1595320707232)
+@@ -2,6 +2,5 @@
+ <project version="4">
+   <component name="VcsDirectoryMappings">
+     <mapping directory="$PROJECT_DIR$/../../.." vcs="Git" />
+-    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/SaveData.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/SaveData.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/SaveData.java	(date 1595320850500)
+@@ -0,0 +1,30 @@
++package com.uwan.SSM.AppBeans;
++
++import com.uwan.SSM.Student;
++import com.uwan.SSM.StudentMapper;
++import org.apache.ibatis.io.Resources;
++import org.apache.ibatis.session.SqlSession;
++import org.apache.ibatis.session.SqlSessionFactory;
++import org.apache.ibatis.session.SqlSessionFactoryBuilder;
++
++import java.io.IOException;
++import java.io.InputStream;
++import java.util.Map;
++
++public class SaveData {
++    public static void sava(Long id,String name,String address) throws IOException {
++        //1.读取配置文件，生成字节输入流
++        InputStream in = Resources.getResourceAsStream("SqlMapConfig.xml");
++        //2.获取SqlSessionFactory
++        SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(in);
++        //3.获取sqlsession对象
++        SqlSession sqlSession = factory.openSession();
++        //4.获取dao的代理对象
++//        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
++        StudentSavaMapper sm=sqlSession.getMapper(StudentSavaMapper.class);
++        int sid = sm.insertstudent(new Student(id, name, address));
++        sqlSession.commit();
++        sqlSession.close();
++        in.close();
++    }
++}
+Index: ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Person.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Person.java	(date 1595320850500)
++++ ../../../SSM/src/main/java/com/uwan/SSM/AppBeans/Person.java	(date 1595320850500)
+@@ -0,0 +1,17 @@
++package com.uwan.SSM.AppBeans;
++
++public class Person {
++    private Onecar car;
++    private Twocar car2;
++    public Person(Onecar onecar,Twocar twocar){
++        car=onecar;
++        car2=twocar;
++    }
++    public void drive(){
++        car.f1();
++        car.f2();
++        car.f3();
++        car2.fun4();
++    }
++
++}

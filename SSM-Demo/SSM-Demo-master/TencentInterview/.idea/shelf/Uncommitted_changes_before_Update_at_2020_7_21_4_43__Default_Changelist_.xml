@@ -1,0 +1,39 @@
+<changelist name="Uncommitted_changes_before_Update_at_2020_7_21_下午4_43_[Default_Changelist]" date="1595321011148" recycled="false" toDelete="true">
+  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_7_21_下午4_43_[Default_Changelist]/shelved.patch" />
+  <option name="DESCRIPTION" value="Uncommitted changes before Update at 2020/7/21 下午4:43 [Default Changelist]" />
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../../../SSM-Demo-master/TencentInterview/out/production/TencentInterview/com/company/Main.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_7_21_下午4_43_[Default_Changelist]/Main.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../../../SSM-Demo-master/TencentInterview/out/production/TencentInterview/com/company/LongestCommon.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_7_21_下午4_43_[Default_Changelist]/LongestCommon.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../../../SSM-Demo-master/TencentInterview/out/production/TencentInterview/com/company/SumTwonum.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_7_21_下午4_43_[Default_Changelist]/SumTwonum.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../../../SSM-Demo-master/TencentInterview/out/production/TencentInterview/com/company/Median.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_7_21_下午4_43_[Default_Changelist]/Median.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../../../SSM-Demo-master/TencentInterview/out/production/TencentInterview/com/company/StringConver.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_7_21_下午4_43_[Default_Changelist]/StringConver.class" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../../../SSM/.mvn/wrapper/maven-wrapper.jar" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_7_21_下午4_43_[Default_Changelist]/maven-wrapper.jar" />
+  </binary>
+  <binary>
+    <option name="BEFORE_PATH" />
+    <option name="AFTER_PATH" value="../../../SSM-Demo-master/TencentInterview/out/production/TencentInterview/com/company/LongestSubstring.class" />
+    <option name="SHELVED_PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2020_7_21_下午4_43_[Default_Changelist]/LongestSubstring.class" />
+  </binary>
+</changelist>
