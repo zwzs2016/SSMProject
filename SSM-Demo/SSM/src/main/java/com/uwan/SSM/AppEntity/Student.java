@@ -1,4 +1,4 @@
-package com.uwan.SSM;
+package com.uwan.SSM.AppEntity;
 
 import java.io.Serializable;
 

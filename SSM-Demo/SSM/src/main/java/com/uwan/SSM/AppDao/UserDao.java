@@ -4,6 +4,6 @@ import com.uwan.SSM.AppEntity.User;
 
 import java.util.List;
 
-public interface IUserDao {
-    List<User> findAll();
+public interface UserDao {
+    List<User> findAll(int id);
 }

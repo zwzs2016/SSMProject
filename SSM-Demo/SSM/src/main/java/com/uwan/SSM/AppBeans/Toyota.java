@@ -3,7 +3,9 @@ package com.uwan.SSM.AppBeans;
 public class Toyota implements Onecar,Twocar {
     private int id;
 
-    public Toyota(){};
+    public Toyota(){
+        System.out.println("已经构造了");
+    };
 
     public int getId() {
         return id;

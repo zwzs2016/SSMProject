@@ -1,5 +1,6 @@
-package com.uwan.SSM;
+package com.uwan.SSM.AppDao;
 
+import com.uwan.SSM.AppEntity.Student;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;

@@ -3,6 +3,9 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/SSM/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/SSM/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-getway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-getway/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-registry/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-registry/src/main/resources" charset="UTF-8" />
   </component>

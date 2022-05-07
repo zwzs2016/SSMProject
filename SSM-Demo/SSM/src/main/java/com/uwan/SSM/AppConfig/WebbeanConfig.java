@@ -1,5 +1,6 @@
 package com.uwan.SSM.AppConfig;
 
+import com.uwan.SSM.AppBeans.JsonUtils;
 import com.uwan.SSM.AppBeans.Onecar;
 import com.uwan.SSM.AppBeans.Person;
 import com.uwan.SSM.AppBeans.Toyota;
@@ -11,7 +12,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 @Configuration
-@EnableAspectJAutoProxy
 
 @ComponentScan(basePackages = "com.uwan.SSM.AppConfig")
 public class WebbeanConfig {
@@ -39,5 +39,10 @@ public class WebbeanConfig {
     @Bean
     public WebAspectsSatement webAspectsSatement() {
         return new WebAspectsSatement();
+    }
+
+    @Bean
+    public JsonUtils jsonUtils(){
+        return new JsonUtils();
     }
 }

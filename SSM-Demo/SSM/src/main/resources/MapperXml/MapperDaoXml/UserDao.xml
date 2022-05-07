@@ -7,6 +7,6 @@
 <mapper namespace="main.java.IUserDao">
     <!--    查询所有操作-->
     <select id="findAll" resultType="com.uwan.SSM.AppDao.UserDao">
-        select * from newscraw limit 10;
+        select * from user where id<#{id};
     </select>
 </mapper>

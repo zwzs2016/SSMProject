@@ -6,7 +6,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SSM" />
         <module name="service-config" />
         <module name="service-registry" />
         <module name="service-common" />
@@ -14,16 +13,19 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="service-common" target="1.5" />
+      <module name="service-common" target="1.8" />
       <module name="service-config" target="1.5" />
-      <module name="service-getway" target="1.5" />
+      <module name="service-getway" target="1.8" />
       <module name="service-registry" target="1.8" />
       <module name="SSM" target="1.8" />
+      <module name="SSM-Demo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="SSM" options="-parameters" />
+      <module name="service-common" options="-parameters" />
+      <module name="service-getway" options="-parameters" />
       <module name="service-registry" options="-parameters" />
     </option>
   </component>

@@ -1,6 +1,6 @@
 package com.uwan.SSM.AppBeans;
 
-import com.uwan.SSM.Student;
+import com.uwan.SSM.AppEntity.Student;
 import org.apache.ibatis.annotations.Insert;
 
 public interface StudentSavaMapper {

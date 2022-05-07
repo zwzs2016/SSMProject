@@ -1,6 +1,7 @@
-package com.uwan.SSM;
+package com.uwan.SSM.AppTest;
 
 import com.uwan.SSM.AppBeans.StudentSavaMapper;
+import com.uwan.SSM.AppEntity.Student;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -8,13 +9,12 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 
 import java.io.InputStream;
-import java.util.List;
 
 public class MybatisTest {
     @Test
     public void testFindall() throws Exception {
         //1.读取配置文件，生成字节输入流
-        InputStream in = Resources.getResourceAsStream("SqlMapConfig.xml");
+        InputStream in = Resources.getResourceAsStream("MapperXml/SqlMapConfig.xml");
         //2.获取SqlSessionFactory
         SqlSessionFactory factory = new SqlSessionFactoryBuilder().build(in);
         //3.获取sqlsession对象

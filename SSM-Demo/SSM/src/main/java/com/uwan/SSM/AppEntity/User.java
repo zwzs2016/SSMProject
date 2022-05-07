@@ -1,14 +1,12 @@
-package com.uwan.SSM;
+package com.uwan.SSM.AppEntity;
 
 import java.io.Serializable;
 
 public class User implements Serializable {
     private Integer id;
-    private String post;
-    private String wages;
-    private String company;
-    private String workinfo;
-    private String companyinfo;
+    private String name;
+    private char sex;
+    private Integer age;
 
     public Integer getId() {
         return id;
@@ -18,55 +16,37 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getPost() {
-        return post;
+    public String getName() {
+        return name;
     }
 
-    public void setPost(String post) {
-        this.post = post;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getWages() {
-        return wages;
+    public char getSex() {
+        return sex;
     }
 
-    public void setWages(String wages) {
-        this.wages = wages;
+    public void setSex(char sex) {
+        this.sex = sex;
     }
 
-    public String getCompany() {
-        return company;
+    public Integer getAge() {
+        return age;
     }
 
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public String getWorkinfo() {
-        return workinfo;
-    }
-
-    public void setWorkinfo(String workinfo) {
-        this.workinfo = workinfo;
-    }
-
-    public String getCompanyinfo() {
-        return companyinfo;
-    }
-
-    public void setCompanyinfo(String companyinfo) {
-        this.companyinfo = companyinfo;
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", post='" + post + '\'' +
-                ", wages='" + wages + '\'' +
-                ", company='" + company + '\'' +
-                ", workinfo='" + workinfo + '\'' +
-                ", companyinfo='" + companyinfo + '\'' +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                ", age=" + age +
                 '}';
     }
 }
