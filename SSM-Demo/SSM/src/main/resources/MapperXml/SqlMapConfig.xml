@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--    配置环境-->
+    <environments default="mysql">
+        <!--        配置mysql环境-->
+        <environment id="mysql">
+            <!--            配置事务-->
+            <transactionManager type="JDBC"></transactionManager>
+            <!--            配置连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/javaweb?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false&amp;serverTimezone=GMT%2B8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="zw123"/>
+            </dataSource>
+
+        </environment>
+    </environments>
+
+    <!--    配置映射文件的位置-->
+    <mappers>
+        <mapper resource="IUserDao.xml"></mapper>
+        <mapper class="com.uwan.SSM.AppDao.StudentMapper"/>
+        <mapper class="com.uwan.SSM.AppBeans.StudentSavaMapper" />
+    </mappers>
+</configuration>
