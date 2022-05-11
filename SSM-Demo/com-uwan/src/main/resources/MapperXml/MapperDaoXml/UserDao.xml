@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace确定方法在哪个Dao接口，id指的是哪个方法,resultType封装至哪-->
+<mapper namespace="main.java.IUserDao">
+    <!--    查询所有操作-->
+    <select id="findAll" resultType="com.uwan.SSM.Demo.AppDao.UserDao">
+        select * from user where id<#{id};
+    </select>
+</mapper>

@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SSM/SSM.iml" filepath="$PROJECT_DIR$/SSM/SSM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com-uwan/SSM.iml" filepath="$PROJECT_DIR$/com-uwan/SSM.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SSM-Demo.iml" filepath="$PROJECT_DIR$/.idea/SSM-Demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com-uwan/com-uwan.iml" filepath="$PROJECT_DIR$/com-uwan/com-uwan.iml" />
+      <module fileurl="file://$PROJECT_DIR$/message-process/message-process.iml" filepath="$PROJECT_DIR$/message-process/message-process.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-common/service-common.iml" filepath="$PROJECT_DIR$/service-common/service-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-config/service-config.iml" filepath="$PROJECT_DIR$/service-config/service-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-getway/service-getway.iml" filepath="$PROJECT_DIR$/service-getway/service-getway.iml" />
