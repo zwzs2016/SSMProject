@@ -2,6 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -9,15 +10,20 @@
         <module name="com-uwan" />
         <module name="service-config" />
         <module name="message-process" />
+        <module name="service-getway" />
+        <module name="service-auth-authentication" />
+        <module name="service-auth" />
         <module name="service-registry" />
         <module name="service-common" />
-        <module name="service-getway" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="com-uwan" target="1.8" />
       <module name="message-process" target="8" />
       <module name="server-getway" target="8" />
+      <module name="service-auth" target="8" />
+      <module name="service-auth-authentication" target="8" />
+      <module name="service-auth-resources" target="8" />
       <module name="service-common" target="1.8" />
       <module name="service-config" target="1.5" />
       <module name="service-getway" target="1.8" />
@@ -32,6 +38,8 @@
       <module name="SSM-Demo" options="-parameters" />
       <module name="com-uwan" options="-parameters" />
       <module name="message-process" options="-parameters" />
+      <module name="service-auth" options="-parameters" />
+      <module name="service-auth-authentication" options="-parameters" />
       <module name="service-common" options="-parameters" />
       <module name="service-getway" options="-parameters" />
       <module name="service-registry" options="-parameters" />

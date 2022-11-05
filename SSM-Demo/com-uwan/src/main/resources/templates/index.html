@@ -3,15 +3,82 @@
 <html>
 
 <head>
-	<title>Good Thymes Virtual Grocery</title>
+	<title>Chat Room</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" media="all"
 		  href="../static/css/gtvg.css" data-th-href="@{/css/gtvg.css}" />
+	<script src="https://unpkg.com/vue@next"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
 
-<p data-th-text="#{home.welcome}">Welcome to our grocery store!</p>
+<div id="app">
+	<h1>Chat Room</h1>
+	<div v-if="!isCreate">
+		<div v-if="!isShow">
+			<h2>mode</h2>
+			<button @click="btn2">video</option>
+			<button @click="btn3">voice</option>
+		</div>
+		<div v-if="isShowInput">
+			<form action="room.html" method="post" @submit.prevent="onSubmit">
+				房间名称<input type="text" v-model="createRoomName" maxlength="20" minlength="5" required>
+				备注<input type="text" v-model="roomRemark" maxlength="200">
+				<input type="submit" value="createRoom">
+			</form>
+		</div>
+		<button v-if="isShow" @click="btn">create a room</button>
+		<button v-if="isShow" @click="btn1">join a room</button>
+	</div>
+	<div v-if="isCreate">
+		<h3>room 正在创建中...</h3>
+	</div>
+</div>
+<script type="text/javascript">
+	var vm = Vue.createApp({
+	  data(){
+		  return{
+			  title:"Hello",
+			  roomId:"080888312",
+			  createRoomName:'',
+			  roomMode:'',
+			  roomRemark:'',
+			  isShowInput:false,
+			  isShow:true,
+			  isCreate:false
+		  }
+	  },
+	  methods:{
+		btn(){
+			this.isShow=false;
+		},
+		btn2(){
+			this.isShowInput=true;
+			this.roomMode='0';
+		},
+		btn3(){
+			this.isShowInput=true;
+			this.roomMode='1';
+		},
+		onSubmit(){
+			let that=this;
+			axios.post('http://localhost:8888/crateRoom/',
+			{
+				"createRoomName":that.createRoomName,
+				"roomMode":that.roomMode,
+				"roomRemark":that.roomRemark
+			})
+			.then(function(res){
+				that.isCreate=true;
+			})
+			.catch(function (error) {
+				console.log(error);
+			});
+		}
+	  }
+    }).mount('#app');
+</script>
 
 </body>
 

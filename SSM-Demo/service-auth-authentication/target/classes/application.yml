@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: oauth2-service-authentication
+
+  #jwt的密钥
+  security:
+    oauth2:
+      jwt:
+        signingKey: 123456
+
+server:
+  port: 3001

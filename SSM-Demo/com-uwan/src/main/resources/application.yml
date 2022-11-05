@@ -26,3 +26,6 @@ spring:
       enable-auto-commit: false        #停止（取消）自动发送
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer        #接收key类型
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer        #接收value类型
+  mybatis-plus:
+    configuration:
+      map-underscore-to-camel-case: true

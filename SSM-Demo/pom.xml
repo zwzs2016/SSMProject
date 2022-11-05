@@ -20,10 +20,12 @@
 
     <modules>
         <module>service-common</module>
-        <module>service-config</module>
         <module>service-getway</module>
         <module>com-uwan</module>
         <module>message-process</module>
+        <module>service-config</module>
+        <module>service-auth</module>
+        <module>service-auth-authentication</module>
 
     </modules>
 

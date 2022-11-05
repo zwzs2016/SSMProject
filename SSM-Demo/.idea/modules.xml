@@ -6,6 +6,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/SSM-Demo.iml" filepath="$PROJECT_DIR$/.idea/SSM-Demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/com-uwan/com-uwan.iml" filepath="$PROJECT_DIR$/com-uwan/com-uwan.iml" />
       <module fileurl="file://$PROJECT_DIR$/message-process/message-process.iml" filepath="$PROJECT_DIR$/message-process/message-process.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-auth/service-auth.iml" filepath="$PROJECT_DIR$/service-auth/service-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-auth-authentication/service-auth-authentication.iml" filepath="$PROJECT_DIR$/service-auth-authentication/service-auth-authentication.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-common/service-common.iml" filepath="$PROJECT_DIR$/service-common/service-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-config/service-config.iml" filepath="$PROJECT_DIR$/service-config/service-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-getway/service-getway.iml" filepath="$PROJECT_DIR$/service-getway/service-getway.iml" />
