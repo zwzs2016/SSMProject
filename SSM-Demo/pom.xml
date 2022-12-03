@@ -26,6 +26,7 @@
         <module>service-config</module>
         <module>service-auth</module>
         <module>service-auth-authentication</module>
+        <module>bamboo</module>
 
     </modules>
 
