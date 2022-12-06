@@ -37,20 +37,10 @@ public class Client {
                 });
         ChannelFuture cf = b.connect("127.0.0.1",8765).syncUninterruptibly();
 
-        cf.channel().writeAndFlush(Unpooled.copiedBuffer("netty client request data".getBytes()));
-//        TimerTask timerTask=new TimerTask() {
-//            @Override
-//            public void run() {
-//                cf.channel().writeAndFlush(Unpooled.copiedBuffer("netty client request data".getBytes()));
-//                System.out.println("nnnnn");
-//            }
-//        };
-//        Timer timer=new Timer("send");
-//        long deley=1000L;
-//        timer.schedule(timerTask,deley);
+//        cf.channel().writeAndFlush(Unpooled.copiedBuffer("netty client request data".getBytes()));
         //释放连接
-//        cf.channel().closeFuture().sync();
-//        workerGroup.shutdownGracefully();
+        cf.channel().closeFuture().sync();
+        workerGroup.shutdownGracefully();
     }
 
     public static void main(String[] args) throws InterruptedException {

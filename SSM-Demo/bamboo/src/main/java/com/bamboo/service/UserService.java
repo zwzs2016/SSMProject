@@ -1,7 +1,9 @@
 package com.bamboo.service;
 
-import org.springframework.stereotype.Service;
+import com.bamboo.entity.User;
+import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService {
+public interface UserService extends IService<User>, UserDetailsService {
 
 }

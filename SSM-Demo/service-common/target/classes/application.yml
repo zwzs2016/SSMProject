@@ -1,0 +1,20 @@
+jasypt:
+  encryptor:
+    # 盐值
+    password: 123
+    # 指定加密方式
+    algorithm: PBEWithMD5AndDES
+    iv-generator-classname: org.jasypt.iv.NoIvGenerator
+    property:
+      # 标识为加密属性的前缀
+      prefix: ENC(
+      # 标识为加密属性的后缀
+      suffix: )
+
+custom:
+  string:
+    constant:
+      PBE_ALGORITHMS_MD5_DES: PBEWITHMD5ANDDES
+      PBE_ALGORITHMS_MD5_TRIPLEDES: PBE_ALGORITHMS_MD5_TRIPLEDES
+      PBE_ALGORITHMS_SHA1_DESEDE: PBEWITHSHA1ANDDESEDE
+      PBE_ALGORITHMS_SHA1_RC2_40: PBEWITHSHA1ANDRC2_40

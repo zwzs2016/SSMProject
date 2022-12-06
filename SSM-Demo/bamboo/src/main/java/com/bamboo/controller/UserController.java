@@ -1,6 +1,7 @@
 package com.bamboo.controller;
 
 import com.bamboo.constant.request.SqlExecuteStatus;
+import com.bamboo.dto.UserDTO;
 import com.bamboo.entity.User;
 import com.bamboo.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,11 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(userMapper.selectList(null));
     }
 
-    @PostMapping("addUser")
-    public ResponseEntity addUser(@RequestBody User user){
-        if (SqlExecuteStatus.INSERT_SUCCESS.getValue()==userMapper.insert(user)){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(SqlExecuteStatus.INSERT_SUCCESS.getMsg());
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(SqlExecuteStatus.INSERT_FAIL.getMsg());
-    }
+//    @PostMapping("addUser")
+//    public ResponseEntity addUser(@RequestBody UserDTO userDTO){
+////        if (SqlExecuteStatus.INSERT_SUCCESS.getValue()==userMapper.insert(user)){
+////            return ResponseEntity.status(HttpStatus.ACCEPTED).body(SqlExecuteStatus.INSERT_SUCCESS.getMsg());
+////        }
+////        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(SqlExecuteStatus.INSERT_FAIL.getMsg());
+//    }
 }

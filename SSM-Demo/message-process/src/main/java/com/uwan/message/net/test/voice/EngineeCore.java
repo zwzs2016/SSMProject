@@ -147,10 +147,9 @@ public class EngineeCore {
 
     public static void main(String args[]) {
 
-        while (true) {
-            EngineeCore engineeCore = new EngineeCore();
-            engineeCore.startRecognize();
-        }
+        //record 20s auto stop
+        EngineeCore engineeCore = new EngineeCore();
+        engineeCore.startRecognize();
     }
 }
 
