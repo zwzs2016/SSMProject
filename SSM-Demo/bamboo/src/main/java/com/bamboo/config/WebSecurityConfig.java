@@ -3,8 +3,10 @@ package com.bamboo.config;
 import com.bamboo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     //注入用户服务
     @Autowired
@@ -31,16 +35,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests()
+        httpSecurity.requestMatchers()
+                .antMatchers("/**")
+                .and()
+                .authorizeRequests()
                 //对可访问URL资源进行角色控制
                 .antMatchers("/admin/**")
-                .hasRole("admin")
-                .antMatchers("/user/**")
-                .access("hasAnyRole('admin','user')")
+                .hasRole("ADMIN")
                 .antMatchers("/db/**")
-                .access("hasRole('dba') and hasRole('admin')")
+                .access("hasRole('DBA') and hasRole('ADMIN')")
                 //用户注册接口和执行用户注册接口允许访问
-                .antMatchers("/register","/doregister")
+                .antMatchers("/user/**")
                 .permitAll()
                 //用户访问其他URL资源都必须认证后访问，即登陆后访问
                 .anyRequest()
