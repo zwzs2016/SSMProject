@@ -6,4 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends IService<User>, UserDetailsService {
     int addUser(User user);
+
+    int shutdown(String username);
 }

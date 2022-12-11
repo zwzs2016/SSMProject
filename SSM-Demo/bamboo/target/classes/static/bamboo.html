@@ -1,0 +1,248 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@next"></script>
+    
+    <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+
+    
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>	
+    
+
+    <script src="https://unpkg.com/video.js/dist/video.js"></script>
+    <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- 新 Bootstrap5 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+    
+    <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+    <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+    
+    <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+    <title>我的音乐台</title>
+
+    <style>
+        .video-js .vjs-tech {
+            position: relative !important;
+        }
+        div{
+            width: 100%;
+        }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+        <div class="row">
+            <div class="col-md-2">
+
+            </div>
+            <div class="text-center col-md-8" style="margin: auto;">
+                <p class="lead">{{ username }}音乐电台</p>
+                <video id="myVideo" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" data-setup='{}'
+                    style='width: 100%;height: auto;margin: auto;'>
+                    <source id="source" :src="liveUrl" type="application/x-mpegURL">
+                    </source>
+                </video>
+
+                <div class="row text-center">
+                    <div style="margin-top: 1rem;">
+                        <button type="button" class="btn btn-light" @click="openLive" :disabled="isopen">开启电台</button>
+                        <button type="button" class="btn btn-danger" @click="shutdownMusic" :disabled="!isopen">关闭电台</button>
+                        <!-- <a href="https://obsproject.com/zh-cn/download" target="_blank" class="link-info">obs工具下载</a> -->
+                    </div>
+                    <div v-if="musicSwitch">
+                        <div class="card" style="width: 100%;margin: auto;">
+                            <div class="card-body">
+                                Server:<a href="#" class="link-info">{{ serviceUrl}}</a>
+                            </div>
+                        </div>
+                        <div class="card" style="width: 100%;margin: auto;">
+                            <div class="card-body">
+                                Stream Key:{{liveCode}}
+                            </div>
+                        </div>
+                        <div class="card" style="width: 100%;margin: auto;" v-if="isopen">
+                            <div class="card-body">
+                                电台地址:<a :href="liveShareUrl" class="link-info" target="_blank">{{ liveShareUrl }}</a>
+                            </div>
+                        </div>
+                        
+                    </div>  
+                </div>
+
+            </div>
+            <div class="row text-center col-md-2">
+                <div class="dropdown">
+                    <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                      Home
+                    </a>
+                  
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <li><a class="dropdown-item" href="#">个人中心</a></li>
+                      <li><a class="dropdown-item" href="#">我的关注</a></li>
+                      <li><a class="dropdown-item" href="#">站内信</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="#">电台管理</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="https://obsproject.com/zh-cn/download" target="_blank">obs工具</a></li>
+                    </ul>
+                  </div>
+            </div>
+        </div>
+        
+        
+    </div>
+
+<script>
+    const App = {
+    data() {
+        return {
+        baseUrl:'http://localhost:8888/',
+        musicSwitch:true,
+        rtmpservice:'rtmp://localhost:1935/hls',
+        service:'http://localhost:8080/hls/',
+        serviceUrl:'',
+        username:'',
+        liveCode:'',
+        liveUrl:'',
+        isopen:false,
+        liveShareUrl:'',
+        tail:'.m3u8',
+        musicHomeUrl:'http://localhost:8888/bamboo.html'
+        };
+    },
+    mounted(){
+        var that=this;
+        that.liveUrl=sessionStorage.getItem('liveUrl');
+        that.liveCode=sessionStorage.getItem('liveCode');
+        that.liveShareUrl=sessionStorage.getItem('liveShareUrl');
+        that.serviceUrl=sessionStorage.getItem('serviceUrl');
+        that.username=sessionStorage.getItem('username');
+
+        //获取地址栏中的liveCode
+        if(!that.liveCode){
+            that.liveCode=that.getUrlValue('liveShareUrl');
+            that.liveUrl=that.service+that.liveCode+'.m3u8';
+            that.liveShareUrl=that.musicHomeUrl+'?liveShareUrl='+that.liveCode;
+            sessionStorage.setItem('liveCode',that.liveCode);
+            sessionStorage.setItem('liveUrl',that.liveUrl);
+        }
+
+        if(that.liveCode){
+            that.isopen=true;
+        }
+        axios.post(that.baseUrl+'user/iscurrentuser',{
+            liveCode:that.liveCode
+        })
+        .then(function(res){
+            if(!res.status==200){
+                that.musicSwitch=false;
+            }
+        })
+        .catch(function(res){
+            that.musicSwitch=false;
+        })
+        // axios.get(that.baseUrl+'user/username')
+        //     .then(function(res){
+        //         console.log(res)
+        //         if(res.status==200){
+        //             console.log(res.data);//http://localhost:8080/hls/abcd.m3u8
+        //             //获取livecode
+        //             if(res.data.data){
+        //                 that.liveCode=res.data.data.livecode;
+        //                 that.liveUrl=that.service+that.liveCode+'.m3u8';
+        //                 that.username=res.data.data.username;
+        //                 that.musicSwitch=true;
+        //                 that.isopen=true;
+        //             }
+                    
+        //         }
+        //     })
+    },
+    methods:{
+        openLive(){
+            var that=this;
+            axios.get(that.baseUrl+'user/username')
+            .then(function(res){
+                console.log(res)
+                if(res.status==200 || res.status==201){
+                    console.log(res.data);//http://localhost:8080/hls/abcd.m3u8
+                    //获取livecode
+                    if(res.data.data){
+                        that.liveCode=res.data.data.livecode;
+                        that.liveUrl=that.service+that.liveCode+'.m3u8';
+                        that.liveShareUrl=that.musicHomeUrl+'?liveShareUrl='+that.liveCode;
+                        that.username=res.data.data.username;
+                        that.serviceUrl=that.rtmpservice+'?livekey='+res.data.data.token;
+                        that.musicSwitch=true;
+                        that.isopen=true;
+
+                        sessionStorage.setItem('liveCode',that.liveCode);
+                        sessionStorage.setItem('liveUrl',that.liveUrl);
+                        sessionStorage.setItem('liveShareUrl',that.liveShareUrl);
+                        sessionStorage.setItem('serviceUrl',that.serviceUrl);
+                        sessionStorage.setItem('username',that.username);
+
+                        window.location.reload();
+                    }
+                    
+                }
+            })
+            .catch(function (error) {
+              console.log(error);
+              alert('请求失败!');
+              window.location.reload();
+            });
+        },
+        shutdownMusic(){
+            var that=this;
+            axios.post(that.baseUrl+'user/shutdown')
+            .then(function(res){
+                console.log(res);
+                if(res.status==200){
+                    //取消禁用
+                    that.isopen=false;
+                    //删除session
+                    sessionStorage.clear();
+
+                    window.location.reload();
+                }
+            })
+            .catch(function(error){
+                console(error);
+                alert('关闭失败!');
+                window.location.reload();
+            })
+        },
+        getUrlValue(urlKey){
+            if(urlKey){
+                let query=window.location.search;
+                let removeMark = query.substr(1);
+                let createArray = removeMark.split('&');
+
+                let addressItem;
+                for(let item of createArray) {
+                    if(item.includes(urlKey)) {
+                        addressItem = item // addressItem值：address=beijing
+                        break
+                    }
+                }
+
+                let index = addressItem.indexOf('=');
+
+                let getAddressValue = addressItem.substr(index + 1);
+
+                return getAddressValue;
+            }
+        }
+    }
+    };
+    const app = Vue.createApp(App);
+    app.mount("#app");
+</script>
+  </body>
+</html>

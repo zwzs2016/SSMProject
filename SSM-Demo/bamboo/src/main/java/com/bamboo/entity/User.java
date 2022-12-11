@@ -62,6 +62,9 @@ public class User implements Serializable , UserDetails {
     private Date updateTime;
 
     @TableField(exist = false)
+    private String liveCode;
+
+    @TableField(exist = false)
     private List<Role> roles;
 
     @Override
@@ -181,6 +184,14 @@ public class User implements Serializable , UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getLiveCode() {
+        return liveCode;
+    }
+
+    public void setLiveCode(String liveCode) {
+        this.liveCode = liveCode;
     }
 
     @Override

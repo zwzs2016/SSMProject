@@ -1,5 +1,7 @@
 package com.bamboo.service.impl;
 
+import com.anji.captcha.service.CaptchaService;
+import com.bamboo.constant.request.RedisExecuteStatus;
 import com.bamboo.constant.request.SqlExecuteStatus;
 import com.bamboo.entity.Role;
 import com.bamboo.entity.User;
@@ -8,6 +10,7 @@ import com.bamboo.mapper.RoleMapper;
 import com.bamboo.mapper.UserMapper;
 import com.bamboo.mapper.UserWithRoleMapper;
 import com.bamboo.service.UserService;
+import com.bamboo.vo.UserVO;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -15,13 +18,19 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.data.redis.cache.RedisCache;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.token.TokenService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,6 +46,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     RoleMapper roleMapper;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -93,5 +105,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 return SqlExecuteStatus.INSERT_FAIL.getValue();
             }
         }
+    }
+
+    @Override
+    public int shutdown(String username) {
+        UserVO userVO = (UserVO) redisTemplate.opsForValue().get(username);
+        if (userVO!=null){
+            Boolean delete = redisTemplate.delete(username);
+            if (delete){
+                return RedisExecuteStatus.DELETE_SUCCESS.getValue();
+            }
+        }
+        return RedisExecuteStatus.DELETE_FAIL.getValue();
     }
 }
