@@ -22,6 +22,9 @@ public class BambooMusicInfo implements Serializable {
     @TableId(type=IdType.AUTO)
     private Integer id;
 
+    @TableField("room_id")
+    private String roomId;
+
     @TableField("title")
     private String title;
 
@@ -30,6 +33,12 @@ public class BambooMusicInfo implements Serializable {
 
     @TableField("remarks")
     private String remarks;
+
+    @TableField("live_url")
+    private String liveUrl;
+
+    @TableField("img_data")
+    private byte[] imgFile;
 
     @TableField("create_time")
     private Date createTime;

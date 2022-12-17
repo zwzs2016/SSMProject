@@ -1,8 +1,11 @@
 package com.bamboo.config;
 
+import com.bamboo.util.RedisUtil;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.redisson.api.RBloomFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +17,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 @Configuration
 public class RedisConfiguration extends CachingConfigurerSupport {
+    @Autowired
+    RedisUtil redisUtil;
+
     /**
      * 添加到 IOC 容器中
      */
@@ -38,5 +44,13 @@ public class RedisConfiguration extends CachingConfigurerSupport {
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
+    }
+
+    /*
+    * 布隆过滤器
+     */
+    @Bean
+    public RBloomFilter<String> bloomFilter(){
+        return redisUtil.bloomFilterInit("music_user");
     }
 }

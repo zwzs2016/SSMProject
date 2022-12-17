@@ -17,6 +17,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.jasypt.encryption.StringEncryptor;
+import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.cache.RedisCache;
@@ -49,6 +50,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    RBloomFilter bloomFilter;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -109,6 +113,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public int shutdown(String username) {
+        //布隆过滤
+        boolean contains = bloomFilter.contains(username);
+        if (!contains){
+            return RedisExecuteStatus.NO_VALUE_EXISTS.getValue();
+        }
         UserVO userVO = (UserVO) redisTemplate.opsForValue().get(username);
         if (userVO!=null){
             Boolean delete = redisTemplate.delete(username);

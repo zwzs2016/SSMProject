@@ -11,6 +11,7 @@ import com.bamboo.mapper.RoleMapper;
 import com.bamboo.mapper.UserMapper;
 import com.bamboo.mapper.UserWithRoleMapper;
 import com.bamboo.service.UserService;
+import com.bamboo.util.RedisUtil;
 import com.bamboo.vo.UserVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -18,6 +19,7 @@ import com.uwan.common.util.JwtTokenUtils;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import org.jasypt.encryption.StringEncryptor;
+import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -27,12 +29,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("user")
@@ -58,6 +59,9 @@ public class UserController {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    @Autowired
+    private RBloomFilter bloomFilter;
+
     @Operation(summary = "测试获取用户信息")
     @GetMapping("getAll")
     public ResponseEntity<List<User>> getAll(){
@@ -82,7 +86,7 @@ public class UserController {
 
     @Operation(summary = "获取用户信息(livecode)")
     @GetMapping(value = "/username")
-    public ResponseEntity<UserVO> currentUserName(Authentication authentication) {
+    public ResponseEntity currentUserName(Authentication authentication) {
         String username=authentication.getName();
         //先去redis获取
         UserVO userVOformRedis= (UserVO) redisTemplate.opsForValue().get(username);
@@ -118,7 +122,10 @@ public class UserController {
         userVO.setToken(token);
 
         //存入Redis
-        redisTemplate.opsForValue().set(username,userVO);
+        redisTemplate.opsForValue().set(username,userVO,1, TimeUnit.DAYS);
+
+        //布隆过滤存储
+        bloomFilter.add(username);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(userVO);
@@ -128,8 +135,9 @@ public class UserController {
     @PostMapping("/shutdown")
     public ResponseEntity shutdownmusic(Authentication authentication){
         String username=authentication.getName();
+        Integer shutdown = null;
         if (username!=null){
-            int shutdown = userService.shutdown(username);
+            shutdown = userService.shutdown(username);
             if (shutdown== RedisExecuteStatus.DELETE_SUCCESS.getValue()){
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(
@@ -139,7 +147,7 @@ public class UserController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(
-                        new ResponseEntityResult<>(String.valueOf(HttpStatus.BAD_REQUEST.value()),RedisExecuteStatus.DELETE_FAIL.getMsg(),null,false)
+                        new ResponseEntityResult<>(String.valueOf(HttpStatus.BAD_REQUEST.value()),RedisExecuteStatus.valueOf(shutdown).getMsg(),null,false)
                 );
     }
 

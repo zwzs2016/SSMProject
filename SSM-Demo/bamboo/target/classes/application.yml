@@ -25,3 +25,8 @@ aj:
     aes-status: true
     # 滑动干扰项(0/1/2)
     interference-options: 2
+
+custom:
+  expiration:
+    time:
+      bamboomusic_query: 300
