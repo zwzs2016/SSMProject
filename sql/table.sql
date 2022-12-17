@@ -2,12 +2,16 @@
 
 CREATE TABLE `bamboo_music_info` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `room_id` varchar(10) NOT NULL COMMENT '房间号码',
   `title` varchar(50) DEFAULT NULL COMMENT '标题',
   `author` varchar(50) DEFAULT NULL COMMENT '作家',
   `remarks` varchar(100) DEFAULT NULL COMMENT '备注',
+  `live_url` varchar(100) NOT NULL COMMENT 'liveurl地址',
+  `img_data` blob COMMENT '图片',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `bamboo_music_info_room_id_UN` (`room_id`),
   UNIQUE KEY `bamboo_music_info_UN` (`author`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
