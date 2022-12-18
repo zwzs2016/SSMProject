@@ -1,6 +1,7 @@
 package com.bamboo.config;
 
 import com.bamboo.service.UserService;
+import com.bamboo.util.filter.CustomLoginFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -51,8 +53,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/db/**")
                 .access("hasRole('DBA') and hasRole('ADMIN')")
                 //用户注册接口和执行用户注册接口允许访问
-                .antMatchers("/user/**","/register.html","/live/**")
+                .antMatchers("/user/**","/register.html","/live/**","/tologin")
                 .permitAll()
+                .antMatchers("/captcha/**","/images/**","/css/**","/js/**","/tologin").anonymous()
                 //用户访问其他URL资源都必须认证后访问，即登陆后访问
                 .anyRequest()
                 .authenticated()
@@ -85,5 +88,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable();
+        // 将自定义的过滤器添加进去
+        httpSecurity.addFilterAt(customLoginFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
+
+    @Bean
+    public CustomLoginFilter customLoginFilter() throws Exception {
+        CustomLoginFilter customLoginFilter = new CustomLoginFilter("/tologin");
+        customLoginFilter.setAuthenticationManager(authenticationManagerBean());
+        customLoginFilter.setAuthenticationSuccessHandler(new AuthenticationSuccessHandler() {
+            @Override
+            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, IOException {
+                response.setContentType("application/json;charset=utf-8");
+                response.sendRedirect("/bamboo.html");
+            }
+        });
+        customLoginFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandler() {
+            @Override
+            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+                Map<String, Object> result = new HashMap<String, Object>();
+                result.put("msg", "登录失败: "+exception.getMessage());
+                result.put("status", 500);
+                response.setContentType("application/json;charset=UTF-8");
+                String s = new ObjectMapper().writeValueAsString(result);
+                response.getWriter().println(s);
+            }
+        });
+        return customLoginFilter;
     }
 }

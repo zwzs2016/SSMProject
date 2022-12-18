@@ -1,5 +1,6 @@
 package com.bamboo.config;
 
+import com.anji.captcha.model.common.ResponseModel;
 import com.bamboo.entity.out.ResponseEntityResult;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.MethodParameter;
@@ -26,7 +27,7 @@ public class MyResponseBodyAdvice implements ResponseBodyAdvice {
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
-        if (body !=null&& body instanceof String==false) {
+        if (body !=null&& body instanceof String==false && body instanceof ResponseModel==false) {
             ResponseEntityResult responseEntity = new ResponseEntityResult();
             responseEntity.setData(body);
             //为了测试这里直接用ture了，实际中根据业务方法返回进行设置
