@@ -2,7 +2,9 @@ package com.bamboo.controller;
 
 import com.bamboo.constant.request.RedisExecuteStatus;
 import com.bamboo.constant.request.SqlExecuteStatus;
+import com.bamboo.dto.BambooMusicInfoDTO;
 import com.bamboo.dto.UserDTO;
+import com.bamboo.entity.BambooMusicInfo;
 import com.bamboo.entity.Role;
 import com.bamboo.entity.User;
 import com.bamboo.entity.UserWithRole;
@@ -10,6 +12,7 @@ import com.bamboo.entity.out.ResponseEntityResult;
 import com.bamboo.mapper.RoleMapper;
 import com.bamboo.mapper.UserMapper;
 import com.bamboo.mapper.UserWithRoleMapper;
+import com.bamboo.service.BambooMusicInfoService;
 import com.bamboo.service.UserService;
 import com.bamboo.util.RedisUtil;
 import com.bamboo.vo.UserVO;
@@ -52,6 +55,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private BambooMusicInfoService bambooMusicInfoService;
+
     @Qualifier("myStringEncryptor")
     @Autowired
     StringEncryptor stringEncryptor;
@@ -84,9 +90,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(SqlExecuteStatus.INSERT_FAIL.getMsg());
     }
 
-    @Operation(summary = "获取用户信息(livecode)")
-    @GetMapping(value = "/username")
-    public ResponseEntity currentUserName(Authentication authentication) {
+    @Operation(summary = "获取用户信息(livecode),开启电台")
+    @PostMapping(value = "/username")
+    public ResponseEntity currentUserName(Authentication authentication,@Valid @RequestBody BambooMusicInfoDTO bambooMusicInfoDTO) {
         String username=authentication.getName();
         //先去redis获取
         UserVO userVOformRedis= (UserVO) redisTemplate.opsForValue().get(username);
@@ -121,6 +127,16 @@ public class UserController {
         userVO.setLivecode(liveCode);
         userVO.setToken(token);
 
+        //存入musicinfo
+        bambooMusicInfoDTO.setUsername(username);
+        bambooMusicInfoDTO.setLiveCode(liveCode);
+        int result=userService.saveToMusicInfo(bambooMusicInfoDTO);
+
+        if (result==SqlExecuteStatus.INSERT_FAIL.getValue()){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(null);
+        }
+
         //存入Redis
         redisTemplate.opsForValue().set(username,userVO,1, TimeUnit.DAYS);
 
@@ -137,11 +153,20 @@ public class UserController {
         String username=authentication.getName();
         Integer shutdown = null;
         if (username!=null){
+            //关闭电台删除电台信息
+            QueryWrapper<BambooMusicInfo> queryWrapper=Wrappers.query();
+            queryWrapper.eq("author",username);
+            int count = bambooMusicInfoService.count(queryWrapper);
+            boolean remove = bambooMusicInfoService.remove(queryWrapper);
+            if (!remove && count==1) return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(
+                            new ResponseEntityResult<>(String.valueOf(HttpStatus.BAD_REQUEST.value()),SqlExecuteStatus.DELETE_FAIL.getMsg(),null,Boolean.FALSE)
+                    );
             shutdown = userService.shutdown(username);
             if (shutdown== RedisExecuteStatus.DELETE_SUCCESS.getValue()){
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(
-                                new ResponseEntityResult<>(String.valueOf(HttpStatus.OK.value()),RedisExecuteStatus.DELETE_SUCCESS.getMsg(),null,true)
+                                new ResponseEntityResult<>(String.valueOf(HttpStatus.OK.value()),RedisExecuteStatus.DELETE_SUCCESS.getMsg(),null,Boolean.TRUE)
                         );
             }
         }
@@ -161,7 +186,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(null);
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
                     .body(null);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

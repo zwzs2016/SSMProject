@@ -3,22 +3,29 @@ package com.bamboo.service.impl;
 import com.anji.captcha.service.CaptchaService;
 import com.bamboo.constant.request.RedisExecuteStatus;
 import com.bamboo.constant.request.SqlExecuteStatus;
+import com.bamboo.dto.BambooMusicInfoDTO;
+import com.bamboo.entity.BambooMusicInfo;
 import com.bamboo.entity.Role;
 import com.bamboo.entity.User;
 import com.bamboo.entity.UserWithRole;
 import com.bamboo.mapper.RoleMapper;
 import com.bamboo.mapper.UserMapper;
 import com.bamboo.mapper.UserWithRoleMapper;
+import com.bamboo.service.BambooMusicInfoService;
 import com.bamboo.service.UserService;
 import com.bamboo.vo.UserVO;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.uwan.common.util.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jasypt.encryption.StringEncryptor;
 import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -32,10 +39,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -49,10 +53,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     RoleMapper roleMapper;
 
     @Autowired
+    BambooMusicInfoService bambooMusicInfoService;
+
+    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
     @Autowired
     RBloomFilter bloomFilter;
+
+    @Value("${custom.prefix.live_url}")
+    private  String LIVE_URL_PREFIX;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -126,5 +136,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             }
         }
         return RedisExecuteStatus.DELETE_FAIL.getValue();
+    }
+
+    @Override
+    public int saveToMusicInfo(BambooMusicInfoDTO bambooMusicInfoDTO) {
+        BambooMusicInfo bambooMusicInfo=new BambooMusicInfo();
+        bambooMusicInfo.setRoomId(IdWorker.getIdStr());
+        bambooMusicInfo.setTitle(bambooMusicInfoDTO.getTitle());
+        bambooMusicInfo.setAuthor(bambooMusicInfoDTO.getUsername());
+        bambooMusicInfo.setRemarks(bambooMusicInfoDTO.getRemark());
+        bambooMusicInfo.setImgFile(Base64.getDecoder().decode(StringUtils.substringAfter(bambooMusicInfoDTO.getImageBase64File(),";base64,")));
+        bambooMusicInfo.setLiveUrl(LIVE_URL_PREFIX+bambooMusicInfoDTO.getLiveCode());
+
+        //开始插入
+        if (bambooMusicInfoService.save(bambooMusicInfo)) {
+            return SqlExecuteStatus.INSERT_SUCCESS.getValue();
+        }else {
+            return SqlExecuteStatus.INSERT_FAIL.getValue();
+        }
     }
 }

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorWhite">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical" >
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/serverIP_editText"
+                style="@style/edit_text2_style"
+                android:layout_weight="1"
+                android:textColor="@color/colorBlue"
+                android:text="rbcore.52im.net"
+                android:hint="服务器的域名或Ip地址">
+                <requestFocus />
+            </EditText>
+            
+            <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+                android:layout_marginLeft="6dp"
+                android:textStyle="bold"
+	            android:text="："
+	            android:textAppearance="?android:attr/textAppearanceLarge"
+	            android:textColor="#666666"
+	            android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/serverPort_editText"
+                style="@style/edit_text2_style"
+                android:layout_width="70dp"
+                android:textColor="@color/colorBlue"
+                android:hint="服务器端口号"
+                android:inputType="numberDecimal"
+                android:text="7901"  />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <EditText
+                android:id="@+id/loginName_editText"
+                style="@style/edit_text2_style"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="登陆账号" >
+                <requestFocus />
+            </EditText>
+
+            <EditText
+                android:id="@+id/loginPsw_editText"
+                style="@style/edit_text2_style"
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:inputType="textPassword"
+                android:hint="登陆密码"  />
+        </LinearLayout>
+        
+        <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/dashed_line" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+            
+            <TextView
+                android:id="@+id/demo_version"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="#aaaaaa"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/login_btn"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:background="@drawable/btn_lightgreen_bg"
+                android:text="登  陆"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="bottom|center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/copyright_img" />
+
+    </LinearLayout>
+  
+</LinearLayout>

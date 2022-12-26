@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="gson-2.8.6">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../demo_binary/Server/MobileIMSDKServerDemo_deploy_v6.2b220711/lib/gson-2.8.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../demo_binary/Server/MobileIMSDKServerDemo_deploy_v6.2b220711/lib/log4j-api-2.17.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../demo_binary/Server/MobileIMSDKServerDemo_deploy_v6.2b220711/lib/log4j-core-2.17.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../demo_binary/Server/MobileIMSDKServerDemo_deploy_v6.2b220711/lib/log4j-slf4j-impl-2.17.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../demo_binary/Server/MobileIMSDKServerDemo_deploy_v6.2b220711/lib/MobileIMSDKServer.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../demo_binary/Server/MobileIMSDKServerDemo_deploy_v6.2b220711/lib/netty-all-4.1.50.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../demo_binary/Server/MobileIMSDKServerDemo_deploy_v6.2b220711/lib/rabbitmq-client.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../demo_binary/Server/MobileIMSDKServerDemo_deploy_v6.2b220711/lib/slf4j-api-1.7.30.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/okhttp-4.9.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/kotlin-stdlib-1.6.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/okio-2.2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

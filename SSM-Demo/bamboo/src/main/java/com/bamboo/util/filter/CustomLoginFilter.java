@@ -52,7 +52,7 @@ public class CustomLoginFilter extends AbstractAuthenticationProcessingFilter {
         username = username==null?"":username.trim();
         password = password==null?"":password.trim();
 
-        sysLoginService.login(username, password, code, uuid);
+//        sysLoginService.login(username, password, code, uuid);
 
         // 生成 username+password 形式的 token
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);

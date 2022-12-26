@@ -174,7 +174,7 @@
       ready : function() {},  //加载完毕的回调
       success : function(params) { //成功的回调
           // params为返回的二次验证参数 需要在接下来的实现逻辑回传服务器
-          alert(JSON.stringify($.extend({}, params)))
+          // alert(JSON.stringify($.extend({}, params)))
 
           $("#code").val($.extend({}, params).captchaVerification)
           $("#loginForm").submit();

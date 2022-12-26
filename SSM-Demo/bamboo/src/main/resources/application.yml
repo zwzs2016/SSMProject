@@ -30,3 +30,5 @@ custom:
   expiration:
     time:
       bamboomusic_query: 300
+  prefix:
+    live_url: http://localhost:8888/bamboo.html?liveShareUrl=

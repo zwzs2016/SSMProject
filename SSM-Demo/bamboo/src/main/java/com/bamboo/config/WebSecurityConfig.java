@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -53,9 +54,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/db/**")
                 .access("hasRole('DBA') and hasRole('ADMIN')")
                 //用户注册接口和执行用户注册接口允许访问
-                .antMatchers("/user/**","/register.html","/live/**","/tologin")
+                .antMatchers("/user/**","/register.html","/live/**","/tologin","/images/**","/css/**","/js/**")
                 .permitAll()
-                .antMatchers("/captcha/**","/images/**","/css/**","/js/**","/tologin").anonymous()
+                .antMatchers("/captcha/**","/tologin").anonymous()
                 //用户访问其他URL资源都必须认证后访问，即登陆后访问
                 .anyRequest()
                 .authenticated()
@@ -86,6 +87,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
                 .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .and()
                 .csrf()
                 .disable();
         // 将自定义的过滤器添加进去
@@ -110,6 +117,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 result.put("msg", "登录失败: "+exception.getMessage());
                 result.put("status", 500);
                 response.setContentType("application/json;charset=UTF-8");
+                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
                 String s = new ObjectMapper().writeValueAsString(result);
                 response.getWriter().println(s);
             }

@@ -63,6 +63,8 @@
                             <li><a class="dropdown-item" href="#">电台管理</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="https://obsproject.com/zh-cn/download" target="_blank">obs工具</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout" target="_blank">注销</a></li>
                           </ul>
                       </li>
                       <!-- <li class="nav-item">
@@ -89,7 +91,7 @@
 
                 <div class="row text-center" v-if="musicSwitch">
                     <div style="margin-top: 1rem;">
-                        <button type="button" class="btn btn-light" @click="openLive" :disabled="isopen">开启电台</button>
+                        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#musicInfo" data-bs-whatever="@mdo" :disabled="isopen">开启电台</button>
                         <button type="button" class="btn btn-danger" @click="shutdownMusic" :disabled="!isopen">关闭电台</button>
                         <!-- <a href="https://obsproject.com/zh-cn/download" target="_blank" class="link-info">obs工具下载</a> -->
                     </div>
@@ -115,8 +117,38 @@
 
             </div>
         </div>
-        
-        
+        <!-- 模糊窗体 -->
+        <div class="modal fade" id="musicInfo" tabindex="-1" aria-labelledby="musicInfoModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="musicInfoModalLabel">电台信息</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="row g-3 needs-validation" novalidate>
+                        <div class="mb-3">
+                            <label for="title" class="col-form-label">标题:</label>
+                            <input type="text" class="form-control" maxlength="20" minlength="5" id="title" v-model="bambooMusicInfo.title" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imageFile" class="col-form-label">封面:</label>
+                            <input type="file" class="form-control" id="imageFile" ref="imageBase64File" @change="uploadImage" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="remark" class="col-form-label">简介:</label>
+                            <textarea class="form-control" id="remark" maxlength="100" v-model="bambooMusicInfo.remark" required></textarea>
+                        </div>
+                        
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" @click="openLive">提交</button>
+                        </div>
+                    </form>
+            </div>
+        </div>
+        </div>
     </div>
 
 <script>
@@ -134,7 +166,12 @@
         isopen:false,
         liveShareUrl:'',
         tail:'.m3u8',
-        musicHomeUrl:'http://localhost:8888/bamboo.html'
+        musicHomeUrl:'http://localhost:8888/bamboo.html',
+        bambooMusicInfo:{
+            title:'',
+            imageBase64File:'',
+            remark:''
+        }
         };
     },
     mounted(){
@@ -161,7 +198,7 @@
             liveCode:that.liveCode
         })
         .then(function(res){
-            if(!res.status==200){
+            if(res.status!=200){
                 that.musicSwitch=false;
             }
         })
@@ -188,7 +225,15 @@
     methods:{
         openLive(){
             var that=this;
-            axios.get(that.baseUrl+'user/username')
+            let ispass=that.beforeValid('bambooMusicInfo',that.bambooMusicInfo);
+            if(!ispass) {
+                alert('标题不能为空!');
+                return;
+            };
+            //bambooMusicInfo
+            console.log(that.bambooMusicInfo);
+
+            axios.post(that.baseUrl+'user/username',that.bambooMusicInfo,{headers: {'Content-Type': 'application/json'}})
             .then(function(res){
                 console.log(res)
                 if(res.status==200 || res.status==201){
@@ -237,7 +282,7 @@
                 }
             })
             .catch(function(error){
-                console(error);
+                console.log(error);
                 alert('关闭失败!');
                 window.location.reload();
             })
@@ -262,11 +307,63 @@
 
                 return getAddressValue;
             }
-        }
+        },
+        uploadImage(){
+        console.log(this.$refs.imageBase64File.files[0])
+        let data = this.$refs.imageBase64File.files[0];
+        this.getBase64(data).then(res => {
+            this.bambooMusicInfo.imageBase64File = res
+            console.log('base64', this.bambooMusicInfo.imageBase64File)
+        })
+        },
+        // 把转变方法封装为一个函数
+        getBase64 (file) {
+        return new Promise(function (resolve, reject) {
+            let reader = new FileReader()
+            let imgResult = ''
+            reader.readAsDataURL(file)
+            reader.onload = function () {
+            imgResult = reader.result
+            }
+            reader.onerror = function (error) {
+            reject(error)
+            }
+            reader.onloadend = function () {
+            resolve(imgResult)
+            }
+        })
+        },
+        beforeValid(validStr,obj){
+        if(validStr='bambooMusicInfo'){
+            return obj.title.length>0;
+            }
     }
+    },
+    
     };
     const app = Vue.createApp(App);
     app.mount("#app");
 </script>
   </body>
 </html>
+
+<script>
+    (() => {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+        }, false)
+    })
+    })()
+</script>

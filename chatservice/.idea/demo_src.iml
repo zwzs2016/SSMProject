@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/Server/MobileIMSDKServerDemo2/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/Server/MobileIMSDKServerDemo2/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Server/MobileIMSDKServerDemo2/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/Server/MobileIMSDKServerDemo2/test/resources" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/UDP_Client/MobileIMSDK4jDemo_udp/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/Server/MobileIMSDKServerDemo2/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="gson-2.8.6" level="project" />
+    <orderEntry type="library" name="beautyeye_lnf" level="project" />
+  </component>
+</module>

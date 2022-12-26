@@ -1,0 +1,16 @@
+<component name="libraryTable">
+  <library name="beautyeye_lnf">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/UDP_Client/MobileIMSDK4jDemo_udp/lib/beautyeye_lnf.jar!/" />
+      <root url="jar://$PROJECT_DIR$/UDP_Client/MobileIMSDK4jDemo_udp/lib/EPC_common.jar!/" />
+      <root url="jar://$PROJECT_DIR$/UDP_Client/MobileIMSDK4jDemo_udp/lib/EPC_widget.jar!/" />
+      <root url="jar://$PROJECT_DIR$/UDP_Client/MobileIMSDK4jDemo_udp/lib/gson-2.8.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/UDP_Client/MobileIMSDK4jDemo_udp/lib/MobileIMSDK4j_udp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/UDP_Client/MobileIMSDK4jDemo_udp/lib/MobileIMSDKServer_META.jar!/" />
+      <root url="jar://$PROJECT_DIR$/UDP_Client/MobileIMSDK4jDemo_udp/lib/ninepatch4j.jar!/" />
+      <root url="jar://$PROJECT_DIR$/UDP_Client/MobileIMSDK4jDemo_udp/lib/swing-worker-1.2(1.6-).jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
