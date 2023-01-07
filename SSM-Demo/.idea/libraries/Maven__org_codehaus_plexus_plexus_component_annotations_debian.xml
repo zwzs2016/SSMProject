@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.codehaus.plexus:plexus-component-annotations:debian">
+    <CLASSES>
+      <root url="jar:///usr/share/maven-repo/org/codehaus/plexus/plexus-component-annotations/debian/plexus-component-annotations-debian.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar:///usr/share/maven-repo/org/codehaus/plexus/plexus-component-annotations/debian/plexus-component-annotations-debian-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar:///usr/share/maven-repo/org/codehaus/plexus/plexus-component-annotations/debian/plexus-component-annotations-debian-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
