@@ -33,6 +33,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +93,7 @@ public class UserController {
 
     @Operation(summary = "获取用户信息(livecode),开启电台")
     @PostMapping(value = "/username")
-    public ResponseEntity currentUserName(Authentication authentication,@Valid @RequestBody BambooMusicInfoDTO bambooMusicInfoDTO) {
+    public ResponseEntity currentUserName(Authentication authentication,@Valid @RequestBody BambooMusicInfoDTO bambooMusicInfoDTO) throws SQLException {
         String username=authentication.getName();
         //先去redis获取
         UserVO userVOformRedis= (UserVO) redisTemplate.opsForValue().get(username);
@@ -128,7 +129,8 @@ public class UserController {
         userVO.setToken(token);
 
         //存入musicinfo
-        bambooMusicInfoDTO.setUsername(username);
+        bambooMusicInfoService.beforeInsertCheck(username);
+        bambooMusicInfoDTO.setAuthor(username);
         bambooMusicInfoDTO.setLiveCode(liveCode);
         int result=userService.saveToMusicInfo(bambooMusicInfoDTO);
 

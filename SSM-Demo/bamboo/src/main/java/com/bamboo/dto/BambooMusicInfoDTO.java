@@ -26,7 +26,7 @@ public class BambooMusicInfoDTO {
     @SensitiveWord
     private String remark;
 
-    private String username;
+    private String author;
 
     private String liveCode;
 }

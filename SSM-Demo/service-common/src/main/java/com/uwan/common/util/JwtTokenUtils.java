@@ -17,8 +17,8 @@ public class JwtTokenUtils {
     private static final String ISS = "echisan";
 
 
-    // 过期时间是3600秒，即是1个小时
-    private static final long EXPIRATION = 3600L;
+    // 过期时间是3600*12秒，即是12个小时
+    private static final long EXPIRATION = 43200L;
 
 
     // 选择了记住我之后的过期时间为7天

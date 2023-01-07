@@ -1,6 +1,8 @@
 package com.bamboo.controller;
 
+import com.bamboo.entity.BambooMusicInfo;
 import com.bamboo.entity.User;
+import com.bamboo.service.BambooMusicInfoService;
 import com.bamboo.service.UserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -32,6 +34,9 @@ public class LiveAuthentication {
     @Autowired
     UserService userService;
 
+    @Autowired
+    BambooMusicInfoService bambooMusicInfoService;
+
     @Qualifier("myStringEncryptor")
     @Autowired
     StringEncryptor stringEncryptor;
@@ -49,7 +54,12 @@ public class LiveAuthentication {
             userQueryWrapper.eq("name",username);
             userQueryWrapper.select("id,locked");
             User user = userService.getOne(userQueryWrapper);
-            if (user!=null){
+
+            //是否有电台信息
+            QueryWrapper<BambooMusicInfo> bambooMusicInfoQueryWrapper=Wrappers.query();
+            bambooMusicInfoQueryWrapper.eq("author",username);
+            int count = bambooMusicInfoService.count(bambooMusicInfoQueryWrapper);
+            if (user!=null && count==1){
                 //校验密码 账号情况
                 if (!user.getLocked()){
                     return ResponseEntity.status(HttpStatus.OK)

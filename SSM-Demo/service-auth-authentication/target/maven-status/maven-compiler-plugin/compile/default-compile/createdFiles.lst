@@ -1,0 +1,3 @@
+com/uwan/auth/authentication/controller/testController.class
+com/uwan/auth/authentication/Oauth2AuthenticationApplication.class
+com/uwan/auth/authentication/config/ResourceServerConfig.class

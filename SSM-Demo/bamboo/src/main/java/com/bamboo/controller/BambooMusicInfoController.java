@@ -14,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -31,7 +32,9 @@ public class BambooMusicInfoController {
     }
 
     @PostMapping("addBambooMusic")
-    public ResponseEntity addBambooMusic(@RequestBody BambooMusicInfo bambooMusicInfo){
+    public ResponseEntity addBambooMusic(@RequestBody BambooMusicInfo bambooMusicInfo) throws SQLException {
+        //beforeInsertCheck
+        bambooMusicInfoService.beforeInsertCheck(bambooMusicInfo.getAuthor());
         if(SqlExecuteStatus.INSERT_SUCCESS.getValue()==musicInfoMapper.insert(bambooMusicInfo)){
             return ResponseEntity.status(HttpStatus.ACCEPTED)
                     .body(SqlExecuteStatus.INSERT_SUCCESS.getMsg());
@@ -43,7 +46,7 @@ public class BambooMusicInfoController {
 
     @GetMapping("queryBambooMusic/{search}")
     public ResponseEntity<Page<BambooMusicInfo>> queryBambooMusicByAuthor(@PathVariable(name = "search",required = true) String search, String page, Authentication authentication) throws Exception {
-        Page<BambooMusicInfo> bambooMusicInfoPageFormRedis=bambooMusicInfoService.queryFormRedis(authentication.getName()+search+page);
+        Page<BambooMusicInfo> bambooMusicInfoPageFormRedis=bambooMusicInfoService.queryFormRedis(authentication.getName(),search,page);
 
         if (bambooMusicInfoPageFormRedis!=null){
             return ResponseEntity.status(HttpStatus.OK)

@@ -1,9 +1,13 @@
 package com.bamboo.service.impl;
 
 import com.bamboo.constant.request.RedisExecuteStatus;
+import com.bamboo.constant.request.SqlExecuteStatus;
 import com.bamboo.entity.BambooMusicInfo;
 import com.bamboo.mapper.BambooMusicInfoMapper;
 import com.bamboo.service.BambooMusicInfoService;
+import com.bamboo.vo.UserVO;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.redisson.api.RBloomFilter;
@@ -13,6 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -52,16 +57,33 @@ public class BambooMusicInfoServiceImpl extends ServiceImpl<BambooMusicInfoMappe
     }
 
     @Override
-    public Page<BambooMusicInfo> queryFormRedis(String key) throws Exception {
+    public Page<BambooMusicInfo> queryFormRedis(String name, String search, String page) throws Exception {
+        String key=name+search+page;
         Page<BambooMusicInfo> bambooMusicInfoPage = (Page<BambooMusicInfo>) redisTemplate.opsForValue().get(key);
         if (bambooMusicInfoPage!=null){
             return bambooMusicInfoPage;
         }
+        UserVO userVO= (UserVO) redisTemplate.opsForValue().get(name);
         //布隆过滤
-        if (bloomFilter.contains(key)){
-            throw new Exception(RedisExecuteStatus.NO_VALUE_EXISTS.getMsg());
+        if (userVO==null){
+            if (bloomFilter.contains(key)){
+               throw new Exception(RedisExecuteStatus.NO_VALUE_EXISTS.getMsg());
+            }
         }
         return null;
+    }
+
+    @Override
+    public void beforeInsertCheck(String author) throws SQLException {
+        QueryWrapper<BambooMusicInfo> queryWrapper= Wrappers.query();
+        queryWrapper.eq("author",author);
+        Integer count = musicInfoMapper.selectCount(queryWrapper);
+        if (count!=null && count>0){
+            int delete = musicInfoMapper.delete(queryWrapper);
+            if (SqlExecuteStatus.DELETE_FAIL.getValue()==delete){
+                throw new SQLException(SqlExecuteStatus.DELETE_FAIL.getMsg());
+            }
+        }
     }
 
     /**

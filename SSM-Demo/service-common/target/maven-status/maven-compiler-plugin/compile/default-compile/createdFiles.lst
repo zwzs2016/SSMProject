@@ -1,0 +1,5 @@
+com/uwan/common/util/UrlUtils.class
+com/uwan/common/util/FileUtils.class
+com/uwan/common/util/JasyptUtil.class
+com/uwan/common/util/MyStringEncryptor.class
+com/uwan/common/util/JwtTokenUtils.class

@@ -19,18 +19,16 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="bamboo" target="8" />
+      <module name="bamboo" target="1.8" />
       <module name="com-uwan" target="1.8" />
       <module name="message-process" target="8" />
-      <module name="server-getway" target="8" />
       <module name="service-auth" target="8" />
       <module name="service-auth-authentication" target="8" />
-      <module name="service-auth-resources" target="8" />
       <module name="service-common" target="1.8" />
       <module name="service-config" target="1.5" />
       <module name="service-getway" target="1.8" />
       <module name="service-registry" target="1.8" />
-      <module name="SSM" target="1.8" />
+      <module name="SSM" target="8" />
       <module name="SSM-Demo" target="1.8" />
     </bytecodeTargetLevel>
   </component>

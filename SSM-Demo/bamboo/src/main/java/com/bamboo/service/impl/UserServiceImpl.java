@@ -143,7 +143,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         BambooMusicInfo bambooMusicInfo=new BambooMusicInfo();
         bambooMusicInfo.setRoomId(IdWorker.getIdStr());
         bambooMusicInfo.setTitle(bambooMusicInfoDTO.getTitle());
-        bambooMusicInfo.setAuthor(bambooMusicInfoDTO.getUsername());
+        bambooMusicInfo.setAuthor(bambooMusicInfoDTO.getAuthor());
         bambooMusicInfo.setRemarks(bambooMusicInfoDTO.getRemark());
         bambooMusicInfo.setImgFile(Base64.getDecoder().decode(StringUtils.substringAfter(bambooMusicInfoDTO.getImageBase64File(),";base64,")));
         bambooMusicInfo.setLiveUrl(LIVE_URL_PREFIX+bambooMusicInfoDTO.getLiveCode());

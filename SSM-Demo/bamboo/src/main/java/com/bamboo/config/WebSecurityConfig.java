@@ -2,6 +2,7 @@ package com.bamboo.config;
 
 import com.bamboo.service.UserService;
 import com.bamboo.util.filter.CustomLoginFilter;
+import com.bamboo.util.handler.MyLogoutSuccessHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +34,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserService userService;
     //配置用户登录密码需要BCryptPasswordEncoder密文认证
+
+    @Autowired
+    MyLogoutSuccessHandler myLogoutSuccessHandler;
+
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -89,6 +94,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
+                .logoutSuccessHandler(myLogoutSuccessHandler)
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
