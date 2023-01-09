@@ -7,13 +7,18 @@
     <file url="file://$PROJECT_DIR$/com-uwan/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/com-uwan/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/message-process/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/message-process/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-auth-authentication/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-auth-authentication/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-auth/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-getway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-getway/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-registry/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-registry/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-search/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-search/src/main/resources" charset="UTF-8" />
   </component>
 </project>

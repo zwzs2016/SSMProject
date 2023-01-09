@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <script src="https://unpkg.com/vue@next"></script>
+        
+        <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+    
+        
+        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>	
+        
+    
+        <script src="https://unpkg.com/video.js/dist/video.js"></script>
+        <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script>
+        
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+        <!-- 新 Bootstrap5 核心 CSS 文件 -->
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+        
+        <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+        <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+        
+        <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+        <title>我的音乐台</title>
+    
+        <style>
+            .video-js .vjs-tech {
+                position: relative !important;
+            }
+            div{
+                width: 100%;
+            }
+        </style>
+      </head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">BamBoo</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <!-- <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                  </li> -->
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Home
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="#">个人中心</a></li>
+                        <li><a class="dropdown-item" href="#">我的关注</a></li>
+                        <li><a class="dropdown-item" href="#">站内信</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">电台管理</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="https://obsproject.com/zh-cn/download" target="_blank">obs工具</a></li>
+                      </ul>
+                  </li>
+                  <!-- <li class="nav-item">
+                    <a class="nav-link disabled">Disabled</a>
+                  </li> -->
+                </ul>
+                <form class="d-flex" method="get" role="search" action="./bamboolist.html" >
+                  <input class="form-control me-2" name="search" type="search" placeholder="搜电台" aria-label="Search" required>
+                  <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+              </div>
+            </div>
+        </nav>
+    
+        <div class="container text-center">
+            <div class="row align-items-start">
+                <div class="col mb-3" v-for="(item,index) in bambooInfo.records">
+                    <div class="card" style="width: 18rem;">
+                        <svg class="bd-placeholder-img card-img-top text-center" width="100%" height="180" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false" v-if="!item.imgFile">
+                            <title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#868e96"></rect>
+                            <text x="40%" y="50%" fill="#dee2e6" dy=".3em">加载中...</text>
+                        </svg>
+                        <img :src="'data:image/png;base64,'+item.imgFile" class="card-img-top" alt="..." v-if="item.imgFile">
+                        <div class="card-body">
+                          <h5 class="card-title">{{item.title}}</h5>
+                          <p class="card-text">{{item.remarks}}</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item">{{item.roomId}}</li>
+                          <li class="list-group-item">{{item.author}}</li>
+                        </ul>
+                        <div class="card-body">
+                          <a :href="item.liveUrl" class="card-link" target="_blank">station link</a>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+    
+            <nav aria-label="Page navigation example" v-if="JSON.stringify(bambooInfo) != '{}' ? bambooInfo.records.length>0 : false">
+                <ul class="pagination justify-content-end">
+                    <li class="page-item">
+                    <a class="page-link" :href="getCurrentUrl(currentPage==1?currentPage:currentPage--)" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    </li>
+                    <li class="page-item"><a class="page-link" :href="getCurrentUrl(1)">1</a></li>
+                    <li class="page-item"><a class="page-link" :href="getCurrentUrl(2)">2</a></li>
+                    <li class="page-item"><a class="page-link" :href="getCurrentUrl(3)">3</a></li>
+                    <li class="page-item">
+                    <a class="page-link" :href="getCurrentUrl(currentPage+1)" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                    </li>
+                </ul>
+            </nav>
+
+            
+        </div>
+
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" v-if="!(JSON.stringify(bambooInfo) != '{}' ? bambooInfo.records.length>0 : false)">
+          <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <svg class="bd-placeholder-img rounded me-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#007aff"></rect></svg>
+              <strong class="me-auto">Bamboo</strong>
+              <small>Tips</small>
+              <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                搜索不到电台...
+            </div>
+          </div>
+        </div>    
+        
+    </div>
+    
+    
+    
+
+    
+
+    
+    
+</body>
+</html>
+
+<script>
+	const { createApp } = Vue
+    createApp({
+    data() {
+      return {
+        baseUrl:'http://localhost:8888/',
+        currentUrl:'http://localhost:8888/bamboolist.html/',
+        message: 'Hello Vue!',
+        bambooInfo:{},
+        currentPage:'1'
+      }
+    },
+    mounted(){
+        this.initPage();
+    },
+    methods:{
+        initPage(){
+            var that=this;
+
+            let search=that.getUrlValue('search');
+
+            if(!search) return;
+
+            axios.get(that.baseUrl+'bamboomusic/queryBambooMusic/'+search)
+            .then(function(res){
+                if(res.status==200){
+                    that.bambooInfo=res.data.data;
+                    that.currentPage=bambooInfo.pages;
+                }else{
+                    const toastLiveExample = document.getElementById('liveToast')
+                    const toast = new bootstrap.Toast(toastLiveExample)
+                    toast.show()
+                }
+            })
+            .catch(function(error){
+                const toastLiveExample = document.getElementById('liveToast')
+                const toast = new bootstrap.Toast(toastLiveExample)
+                toast.show()
+            })
+        },
+        getCurrentUrl(page){
+            let query=window.location.search;
+            if(page){
+                query+='?page='+page;
+            }
+            return query;
+        },
+        getUrlValue(urlKey){
+            if(urlKey){
+                let query=window.location.search;
+                let removeMark = query.substr(1);
+                let createArray = removeMark.split('&');
+
+                let addressItem;
+                for(let item of createArray) {
+                    if(item.includes(urlKey)) {
+                        addressItem = item // addressItem值：address=beijing
+                        break
+                    }
+                }
+
+                let index = addressItem.indexOf('=');
+
+                let getAddressValue = addressItem.substr(index + 1);
+
+                return getAddressValue;
+            }
+        }
+    }
+  }).mount('#app')
+</script>

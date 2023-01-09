@@ -28,6 +28,7 @@
         <module>service-auth</module>
         <module>service-auth-authentication</module>
         <module>bamboo</module>
+        <module>service-search</module>
 
     </modules>
 
