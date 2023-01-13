@@ -1,16 +1,26 @@
 package com.bamboo.search.entity;
 
+import lombok.Data;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Document(indexName = "musicInfo",type = "docs", shards = 1, replicas = 0)
+@Data
+@Document(indexName = "musicinfo")
 public class MusicInfo {
+    @Id
+    private String id;
+
+    @Field(type = FieldType.Text,analyzer = "ik_smart")
     private String title;
 
-    private String imageBase64File;
-
+    @Field(type = FieldType.Text)
     private String roomId;
 
+    @Field(type = FieldType.Keyword)
     private String remark;
 
+    @Field(type = FieldType.Text,analyzer = "ik_smart")
     private String author;
 }

@@ -32,3 +32,14 @@ custom:
       bamboomusic_query: 300
   prefix:
     live_url: http://localhost:8888/bamboo.html?liveShareUrl=
+
+spring:
+  application:
+    name: bamboo
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #配置中心地址
+      defaultZone: http://localhost:8081/eureka
