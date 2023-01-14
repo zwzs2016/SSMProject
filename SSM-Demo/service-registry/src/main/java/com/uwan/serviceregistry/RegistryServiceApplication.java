@@ -8,8 +8,8 @@ import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 @SpringBootApplication
 @EnableEurekaServer
 @EnableAutoConfiguration
-public class ServiceApplication {
+public class RegistryServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ServiceApplication.class,args);
+        SpringApplication.run(RegistryServiceApplication.class,args);
     }
 }
