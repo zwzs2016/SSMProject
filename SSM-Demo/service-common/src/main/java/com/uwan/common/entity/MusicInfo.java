@@ -1,58 +1,38 @@
 package com.uwan.common.entity;
 
-public class MusicInfo {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Document(indexName = "musicinfo")
+public class MusicInfo {
+    private static final long serialVersionUID=1L;
+
+    @Id
     private String id;
 
-
+    @Field(type = FieldType.Text,analyzer = "ik_smart")
     private String title;
 
-
+    @Field(type = FieldType.Text)
     private String roomId;
 
-
+    @Field(type = FieldType.Keyword)
     private String remark;
 
-
+    @Field(type = FieldType.Text,analyzer = "ik_smart")
     private String author;
 
-    public String getId() {
-        return id;
-    }
+    @Field(type = FieldType.Keyword)
+    private String liveUrl;
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(String roomId) {
-        this.roomId = roomId;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
+    @Field(type = FieldType.Binary)
+    private byte[] imgFile;
 }

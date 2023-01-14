@@ -39,7 +39,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-              <a class="navbar-brand" href="#">BamBoo</a>
+              <a class="navbar-brand" href="/bamboo.html">BamBoo</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
@@ -71,6 +71,7 @@
                 </ul>
                 <form class="d-flex" method="get" role="search" action="./bamboolist.html" >
                   <input class="form-control me-2" name="search" type="search" placeholder="搜电台" aria-label="Search" required>
+                  <input type="hidden" name="page" value="1">
                   <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
               </div>
@@ -159,7 +160,8 @@
         currentUrl:'http://localhost:8888/bamboolist.html/',
         message: 'Hello Vue!',
         bambooInfo:{},
-        currentPage:'1'
+        currentPage:'1',
+        search:''
       }
     },
     mounted(){
@@ -170,10 +172,13 @@
             var that=this;
 
             let search=that.getUrlValue('search');
+            let page=that.getUrlValue('page');
+
+            that.search=search;
 
             if(!search) return;
 
-            axios.get(that.baseUrl+'bamboomusic/queryBambooMusic/'+search)
+            axios.get(that.baseUrl+'bamboomusic/queryBambooMusic/'+search+'/'+page)
             .then(function(res){
                 if(res.status==200){
                     that.bambooInfo=res.data.data;
@@ -191,10 +196,8 @@
             })
         },
         getCurrentUrl(page){
-            let query=window.location.search;
-            if(page){
-                query+='?page='+page;
-            }
+            // let query=window.location.search;
+            let query=this.currentUrl+'?search='+this.search+'&page='+page;
             return query;
         },
         getUrlValue(urlKey){

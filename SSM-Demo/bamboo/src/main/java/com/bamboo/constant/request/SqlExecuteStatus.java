@@ -5,7 +5,7 @@ public enum SqlExecuteStatus {
 
     INSERT_FAIL(0,"record inserted fail"),
 
-    DELETE_SUCCESS(0,"record delete successfully"),
+    DELETE_SUCCESS(1,"record delete successfully"),
 
     DELETE_FAIL(0,"record delete fail");
 

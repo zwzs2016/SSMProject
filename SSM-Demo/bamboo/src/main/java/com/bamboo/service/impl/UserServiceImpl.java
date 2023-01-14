@@ -150,6 +150,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         //开始插入
         if (bambooMusicInfoService.save(bambooMusicInfo)) {
+            //同步到es
+            bambooMusicInfoService.addToElasticSearch(bambooMusicInfo);
             return SqlExecuteStatus.INSERT_SUCCESS.getValue();
         }else {
             return SqlExecuteStatus.INSERT_FAIL.getValue();

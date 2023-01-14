@@ -14,10 +14,15 @@ import com.bamboo.mapper.UserMapper;
 import com.bamboo.mapper.UserWithRoleMapper;
 import com.bamboo.service.BambooMusicInfoService;
 import com.bamboo.service.UserService;
+import com.bamboo.service.feign.KafkaFeignService;
 import com.bamboo.util.RedisUtil;
 import com.bamboo.vo.UserVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.google.gson.Gson;
+import com.uwan.common.constant.KafkaSendMessageOperate;
+import com.uwan.common.dto.KafkaSendMessageDTO;
+import com.uwan.common.dto.MusicInfoDTO;
 import com.uwan.common.util.JwtTokenUtils;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
@@ -135,8 +140,8 @@ public class UserController {
         int result=userService.saveToMusicInfo(bambooMusicInfoDTO);
 
         if (result==SqlExecuteStatus.INSERT_FAIL.getValue()){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(null);
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(null);
         }
 
         //存入Redis
@@ -166,6 +171,8 @@ public class UserController {
                     );
             shutdown = userService.shutdown(username);
             if (shutdown== RedisExecuteStatus.DELETE_SUCCESS.getValue()){
+                //异步通知
+                bambooMusicInfoService.delete(username);
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(
                                 new ResponseEntityResult<>(String.valueOf(HttpStatus.OK.value()),RedisExecuteStatus.DELETE_SUCCESS.getMsg(),null,Boolean.TRUE)

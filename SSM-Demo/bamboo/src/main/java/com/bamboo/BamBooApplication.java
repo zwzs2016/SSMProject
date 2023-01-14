@@ -8,8 +8,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @ServletComponentScan
 @EnableFeignClients
-public class Application {
+public class BamBooApplication {
     public static void main(String[] args) {
-        SpringApplication.run(Application.class,args);
+        SpringApplication.run(BamBooApplication.class,args);
     }
 }

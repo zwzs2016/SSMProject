@@ -2,22 +2,33 @@ package com.bamboo.service.impl;
 
 import com.bamboo.constant.request.RedisExecuteStatus;
 import com.bamboo.constant.request.SqlExecuteStatus;
+import com.bamboo.dto.BambooMusicInfoDTO;
 import com.bamboo.entity.BambooMusicInfo;
 import com.bamboo.mapper.BambooMusicInfoMapper;
 import com.bamboo.service.BambooMusicInfoService;
+import com.bamboo.service.feign.KafkaFeignService;
+import com.bamboo.service.feign.MusicInfoFeignService;
 import com.bamboo.vo.UserVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.google.gson.Gson;
+import com.uwan.common.constant.KafkaSendMessageOperate;
+import com.uwan.common.dto.KafkaSendMessageDTO;
+import com.uwan.common.dto.MusicInfoDTO;
+import com.uwan.common.entity.MusicInfo;
+import com.uwan.common.entity.out.RestPage;
 import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -28,11 +39,20 @@ public class BambooMusicInfoServiceImpl extends ServiceImpl<BambooMusicInfoMappe
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
+    @Autowired
+    RBloomFilter bloomFilter;
+
+    @Autowired
+    KafkaFeignService kafkaFeignService;
+
+    @Autowired
+    MusicInfoFeignService musicInfoFeignService;
+
     @Value("${custom.expiration.time.bamboomusic_query}")
     private  Integer expireTime;
 
-    @Autowired
-    RBloomFilter bloomFilter;
+    @Value("${custom.kafka.topic.musicinfo}")
+    private String musicinfoTopic;
 
     @Override
     public Page<BambooMusicInfo> queryBambooMusic(String search, String page) {
@@ -46,7 +66,7 @@ public class BambooMusicInfoServiceImpl extends ServiceImpl<BambooMusicInfoMappe
     }
 
     @Override
-    public int saveToRedis(Page<BambooMusicInfo> bambooMusicInfoPage, String key) {
+    public int saveToRedis(Page bambooMusicInfoPage, String key) {
         if (bambooMusicInfoPage.getRecords().size()>0){
             redisTemplate.opsForValue().set(key,bambooMusicInfoPage,expireTime, TimeUnit.SECONDS);
         }else {
@@ -84,6 +104,55 @@ public class BambooMusicInfoServiceImpl extends ServiceImpl<BambooMusicInfoMappe
                 throw new SQLException(SqlExecuteStatus.DELETE_FAIL.getMsg());
             }
         }
+    }
+
+    @Override
+    public void addToElasticSearch(BambooMusicInfo bambooMusicInfo) {
+        //处理添加的musicinfo
+        MusicInfoDTO musicInfoDTO=new MusicInfoDTO();
+        musicInfoDTO.setId(String.valueOf(bambooMusicInfo.getId()));
+        musicInfoDTO.setTitle(bambooMusicInfo.getTitle());
+        musicInfoDTO.setRoomId(bambooMusicInfo.getRoomId());
+        musicInfoDTO.setAuthor(bambooMusicInfo.getAuthor());
+        musicInfoDTO.setRemark(bambooMusicInfo.getRemarks());
+        musicInfoDTO.setLiveUrl(bambooMusicInfo.getLiveUrl());
+        musicInfoDTO.setImgFile(bambooMusicInfo.getImgFile());
+
+        //发送的message
+        Gson gson=new Gson();
+        String sendMessage = gson.toJson(musicInfoDTO);
+
+        //异步kafka消息
+        KafkaSendMessageDTO kafkaSendMessageDTO=new KafkaSendMessageDTO();
+        kafkaSendMessageDTO.setTopic(musicinfoTopic);
+        kafkaSendMessageDTO.setOperate(KafkaSendMessageOperate.ADD_MUSICINFO.getValue());
+        kafkaSendMessageDTO.setMessage(sendMessage);
+        kafkaFeignService.sendMessage(kafkaSendMessageDTO);
+    }
+
+    @Override
+    public Page<MusicInfo> queryFormElasticsearch(String search,String page) {
+        ResponseEntity<List<MusicInfo>> responseEntity = musicInfoFeignService.query(search, page);
+        List<MusicInfo> musicInfoListFormElasticsearch = responseEntity.getBody();
+
+        if (musicInfoListFormElasticsearch.size()==0){
+            return null;
+        }
+
+        Page<MusicInfo> musicInfoPage=new Page<>(Integer.parseInt(page),9);
+        musicInfoPage.setRecords(musicInfoListFormElasticsearch);
+//        musicInfoPage.setPages(Long.parseLong(page));
+        musicInfoPage.setTotal(musicInfoListFormElasticsearch.size());
+        return musicInfoPage;
+    }
+
+    @Override
+    public void delete(String username) {
+        KafkaSendMessageDTO kafkaSendMessageDTO=new KafkaSendMessageDTO();
+        kafkaSendMessageDTO.setTopic(musicinfoTopic);
+        kafkaSendMessageDTO.setOperate(KafkaSendMessageOperate.DELETE_MUSICINFO.getValue());
+        kafkaSendMessageDTO.setMessage(username);
+        kafkaFeignService.sendMessage(kafkaSendMessageDTO);
     }
 
     /**

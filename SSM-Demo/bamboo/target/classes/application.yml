@@ -32,6 +32,9 @@ custom:
       bamboomusic_query: 300
   prefix:
     live_url: http://localhost:8888/bamboo.html?liveShareUrl=
+  kafka:
+    topic:
+      musicinfo: musicinfosearch
 
 spring:
   application:
