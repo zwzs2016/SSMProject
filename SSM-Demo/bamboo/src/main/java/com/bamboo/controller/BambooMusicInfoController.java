@@ -4,9 +4,12 @@ import com.bamboo.constant.request.SqlExecuteStatus;
 import com.bamboo.entity.BambooMusicInfo;
 import com.bamboo.mapper.BambooMusicInfoMapper;
 import com.bamboo.service.BambooMusicInfoService;
+import com.bamboo.service.UserService;
 import com.bamboo.service.feign.KafkaFeignService;
+import com.bamboo.vo.UserVO;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.Gson;
 import com.uwan.common.constant.KafkaSendMessageOperate;
@@ -30,6 +33,9 @@ public class BambooMusicInfoController {
 
     @Autowired
     BambooMusicInfoService bambooMusicInfoService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     KafkaFeignService kafkaFeignService;
@@ -99,6 +105,25 @@ public class BambooMusicInfoController {
         bambooMusicInfoService.saveToRedis(bambooMusicInfoPage,authentication.getName()+search+page);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(bambooMusicInfoPage);
+    }
+
+    @PostMapping("/queryCurrentBambooMusic")
+    public ResponseEntity<UserVO> queryCurrentBambooMusic(Authentication authentication){
+        String username=authentication.getName();
+        if (username!=null){
+            //是当前用户
+            QueryWrapper<BambooMusicInfo> queryWrapper=Wrappers.query();
+            queryWrapper.eq("author",username);
+            int count = bambooMusicInfoService.count(queryWrapper);
+            if (count==1){
+                //如果是当前用户，则返回userVO信息
+                UserVO userVO=userService.getUserVo(username);
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(userVO);
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(null);
     }
 
 

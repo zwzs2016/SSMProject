@@ -116,6 +116,7 @@ public class BambooMusicInfoServiceImpl extends ServiceImpl<BambooMusicInfoMappe
         musicInfoDTO.setAuthor(bambooMusicInfo.getAuthor());
         musicInfoDTO.setRemark(bambooMusicInfo.getRemarks());
         musicInfoDTO.setLiveUrl(bambooMusicInfo.getLiveUrl());
+        musicInfoDTO.setToken(bambooMusicInfo.getToken());
         musicInfoDTO.setImgFile(bambooMusicInfo.getImgFile());
 
         //发送的message

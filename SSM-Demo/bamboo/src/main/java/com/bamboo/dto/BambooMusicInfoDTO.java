@@ -29,4 +29,6 @@ public class BambooMusicInfoDTO {
     private String author;
 
     private String liveCode;
+
+    private String token;
 }

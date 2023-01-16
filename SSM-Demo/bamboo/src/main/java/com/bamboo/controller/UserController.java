@@ -106,6 +106,21 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(userVOformRedis);
         }
+
+        if (username!=null){
+            //是当前用户
+            QueryWrapper<BambooMusicInfo> queryWrapper=Wrappers.query();
+            queryWrapper.eq("author",username);
+            int count = bambooMusicInfoService.count(queryWrapper);
+            if (count==1){
+                //如果是当前用户，则返回userVO信息
+                UserVO userVO=userService.getUserVo(username);
+                return ResponseEntity.status(HttpStatus.OK)
+                        .body(userVO);
+            }
+        }
+
+
         UserVO userVO=new UserVO();
         QueryWrapper<User> userQueryWrapper= Wrappers.query();
         userQueryWrapper.eq("name",username);
@@ -188,9 +203,9 @@ public class UserController {
     @Operation(summary = "是否当前用户")
     @PostMapping(value = "/iscurrentuser",consumes ="application/json" ,produces = "application/json")
     public ResponseEntity iscurrentuser(@RequestBody Map<String, Object> map, Authentication authentication){
+        String username=authentication.getName();
         String liveCode= (String) map.get("liveCode");
         if (!StringUtils.isEmpty(liveCode)){
-            //是当前用户
             if (stringEncryptor.decrypt(liveCode).equals(authentication.getName())){
                 return ResponseEntity.status(HttpStatus.OK)
                         .body(null);

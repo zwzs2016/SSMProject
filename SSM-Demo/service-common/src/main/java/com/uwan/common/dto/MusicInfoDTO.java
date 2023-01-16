@@ -21,7 +21,11 @@ public class MusicInfoDTO {
 
     private String author;
 
+    @NotEmpty
     private String liveUrl;
+
+    @NotEmpty
+    private String token;
 
     private byte[] imgFile;
 

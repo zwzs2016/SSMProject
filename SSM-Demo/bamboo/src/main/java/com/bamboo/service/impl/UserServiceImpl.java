@@ -1,6 +1,5 @@
 package com.bamboo.service.impl;
 
-import com.anji.captcha.service.CaptchaService;
 import com.bamboo.constant.request.RedisExecuteStatus;
 import com.bamboo.constant.request.SqlExecuteStatus;
 import com.bamboo.dto.BambooMusicInfoDTO;
@@ -14,31 +13,21 @@ import com.bamboo.mapper.UserWithRoleMapper;
 import com.bamboo.service.BambooMusicInfoService;
 import com.bamboo.service.UserService;
 import com.bamboo.vo.UserVO;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.uwan.common.util.FileUtils;
+import com.uwan.common.util.JwtTokenUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jasypt.encryption.StringEncryptor;
 import org.redisson.api.RBloomFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.data.redis.cache.RedisCache;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.token.TokenService;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 @Service
@@ -147,6 +136,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         bambooMusicInfo.setRemarks(bambooMusicInfoDTO.getRemark());
         bambooMusicInfo.setImgFile(Base64.getDecoder().decode(StringUtils.substringAfter(bambooMusicInfoDTO.getImageBase64File(),";base64,")));
         bambooMusicInfo.setLiveUrl(LIVE_URL_PREFIX+bambooMusicInfoDTO.getLiveCode());
+        bambooMusicInfo.setToken(bambooMusicInfoDTO.getToken());
 
         //开始插入
         if (bambooMusicInfoService.save(bambooMusicInfo)) {
@@ -156,5 +146,47 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }else {
             return SqlExecuteStatus.INSERT_FAIL.getValue();
         }
+    }
+
+    @Override
+    public UserVO getUserVo(String username) {
+        UserVO userVOformRedis= (UserVO) redisTemplate.opsForValue().get(username);
+        if (userVOformRedis!=null){
+            return userVOformRedis;
+        }
+        //redis不存在去mysql查询
+        UserVO userVO=new UserVO();
+        QueryWrapper<User> userQueryWrapper= Wrappers.query();
+        userQueryWrapper.eq("name",username);
+        userQueryWrapper.select("id");
+        User user = userMapper.selectOne(userQueryWrapper);
+        //查询user role list
+        QueryWrapper<UserWithRole> userWithRoleQueryWrapper=Wrappers.query();
+        userWithRoleQueryWrapper.eq("user_id",user.getId());
+        userWithRoleQueryWrapper.select("role_id");
+        List<UserWithRole> userWithRoles = userWithRoleMapper.selectList(userWithRoleQueryWrapper);
+
+        //role表查询用户角色
+        List list=new ArrayList();
+        for(UserWithRole userWithRole:userWithRoles){
+            list.add(userWithRole.getRoleId());
+        }
+        List<Role> roleList = roleMapper.selectBatchIds(list);
+
+        //在到musicinfo查询 live_url token
+        QueryWrapper<BambooMusicInfo> bambooMusicInfoQueryWrapper=Wrappers.query();
+        bambooMusicInfoQueryWrapper.eq("author",username);
+        bambooMusicInfoQueryWrapper.select("live_url,token");
+        //bamboomusic 先决条件判断已不为空
+        BambooMusicInfo bambooMusicInfo = bambooMusicInfoService.getOne(bambooMusicInfoQueryWrapper, true);
+        String liveUrl=bambooMusicInfo.getLiveUrl();
+        String token = bambooMusicInfo.getToken();
+
+        userVO.setUsername(username);
+        userVO.setRoles(roleList);
+        userVO.setLivecode(StringUtils.substringAfter(liveUrl,"?liveShareUrl="));
+        userVO.setToken(token);
+
+        return userVO;
     }
 }

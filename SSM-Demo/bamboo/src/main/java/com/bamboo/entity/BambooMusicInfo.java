@@ -37,6 +37,9 @@ public class BambooMusicInfo implements Serializable {
     @TableField("live_url")
     private String liveUrl;
 
+    @TableField("token")
+    private String token;
+
     @TableField("img_data")
     private byte[] imgFile;
 

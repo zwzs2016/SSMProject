@@ -33,6 +33,9 @@ public class MusicInfo {
     @Field(type = FieldType.Keyword)
     private String liveUrl;
 
+    @Field(type = FieldType.Keyword)
+    private String token;
+
     @Field(type = FieldType.Binary)
     private byte[] imgFile;
 }

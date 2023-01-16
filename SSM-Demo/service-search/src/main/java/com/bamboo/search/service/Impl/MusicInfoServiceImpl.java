@@ -29,6 +29,7 @@ public class MusicInfoServiceImpl implements MusicInfoService {
         musicInfo.setRemark(musicInfoDTO.getRemark());
         musicInfo.setRoomId(musicInfoDTO.getRoomId());
         musicInfo.setLiveUrl(musicInfoDTO.getLiveUrl());
+        musicInfo.setToken(musicInfoDTO.getToken());
         musicInfo.setImgFile(musicInfoDTO.getImgFile());
         MusicInfo musicInfoSave = musicInfoRepository.save(musicInfo);
         if (musicInfoSave!=null){

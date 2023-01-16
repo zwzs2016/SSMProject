@@ -183,8 +183,10 @@
         that.serviceUrl=sessionStorage.getItem('serviceUrl');
         that.username=sessionStorage.getItem('username');
 
+        console.log(that.liveCode)
+
         //获取地址栏中的liveCode
-        if(!that.liveCode){
+        if(that.liveCode!=null){
             that.liveCode=that.getUrlValue('liveShareUrl');
             that.liveUrl=that.service+that.liveCode+'.m3u8';
             that.liveShareUrl=that.musicHomeUrl+'?liveShareUrl='+that.liveCode;
@@ -194,34 +196,45 @@
 
         if(that.liveCode){
             that.isopen=true;
-        }
-        axios.post(that.baseUrl+'user/iscurrentuser',{
+
+            axios.post(that.baseUrl+'user/iscurrentuser',{
             liveCode:that.liveCode
-        })
-        .then(function(res){
-            if(res.status!=200){
+            })
+            .then(function(res){
+                if(res.status!=200){
+                    that.musicSwitch=false;
+                }
+            })
+            .catch(function(res){
                 that.musicSwitch=false;
-            }
-        })
-        .catch(function(res){
-            that.musicSwitch=false;
-        })
-        // axios.get(that.baseUrl+'user/username')
+            })
+        }
+        
+        // axios.post(that.baseUrl+'bamboomusic/queryCurrentBambooMusic')
         //     .then(function(res){
         //         console.log(res)
         //         if(res.status==200){
         //             console.log(res.data);//http://localhost:8080/hls/abcd.m3u8
         //             //获取livecode
         //             if(res.data.data){
+        //                 data=res.data.data;
+                        
         //                 that.liveCode=res.data.data.livecode;
         //                 that.liveUrl=that.service+that.liveCode+'.m3u8';
         //                 that.username=res.data.data.username;
         //                 that.musicSwitch=true;
         //                 that.isopen=true;
+
+        //                 sessionStorage.setItem('liveCode',res.data.data.livecode);
+        //                 sessionStorage.setItem('liveUrl',that.service+that.liveCode+'.m3u8');
+        //                 sessionStorage.setItem('username',res.data.data.username);
         //             }
                     
         //         }
         //     })
+    },
+    updated(){
+
     },
     methods:{
         openLive(){
