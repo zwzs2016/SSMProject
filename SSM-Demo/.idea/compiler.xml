@@ -9,6 +9,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="bamboo" />
+        <module name="service-recommend" />
         <module name="com-uwan" />
         <module name="service-config" />
         <module name="message-process" />
@@ -29,6 +30,7 @@
       <module name="service-common" target="1.8" />
       <module name="service-config" target="1.5" />
       <module name="service-getway" target="1.8" />
+      <module name="service-recommend" target="1.8" />
       <module name="service-registry" target="1.8" />
       <module name="service-search" target="1.8" />
       <module name="SSM" target="8" />
@@ -46,6 +48,7 @@
       <module name="service-auth-authentication" options="-parameters" />
       <module name="service-common" options="-parameters" />
       <module name="service-getway" options="-parameters" />
+      <module name="service-recommend" options="-parameters" />
       <module name="service-registry" options="-parameters" />
       <module name="service-search" options="-parameters" />
     </option>

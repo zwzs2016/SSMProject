@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: recommender
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #配置中心地址
+      defaultZone: http://localhost:8081/eureka

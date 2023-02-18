@@ -29,6 +29,7 @@
         <module>service-auth-authentication</module>
         <module>bamboo</module>
         <module>service-search</module>
+        <module>service-recommend</module>
 
     </modules>
 

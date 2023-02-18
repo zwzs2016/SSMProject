@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/service-common/service-common.iml" filepath="$PROJECT_DIR$/service-common/service-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-config/service-config.iml" filepath="$PROJECT_DIR$/service-config/service-config.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-getway/service-getway.iml" filepath="$PROJECT_DIR$/service-getway/service-getway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-recommend/service-recommend.iml" filepath="$PROJECT_DIR$/service-recommend/service-recommend.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-registry/service-registry.iml" filepath="$PROJECT_DIR$/service-registry/service-registry.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-search/service-search.iml" filepath="$PROJECT_DIR$/service-search/service-search.iml" />
     </modules>

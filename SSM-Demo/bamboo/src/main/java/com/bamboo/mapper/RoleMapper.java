@@ -6,6 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.context.annotation.Scope;
 
 @Mapper
-@Scope(value = "prototype")
 public interface RoleMapper extends BaseMapper<Role> {
 }

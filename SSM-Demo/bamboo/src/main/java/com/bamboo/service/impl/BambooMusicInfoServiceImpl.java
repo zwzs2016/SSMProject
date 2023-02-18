@@ -110,7 +110,7 @@ public class BambooMusicInfoServiceImpl extends ServiceImpl<BambooMusicInfoMappe
     public void addToElasticSearch(BambooMusicInfo bambooMusicInfo) {
         //处理添加的musicinfo
         MusicInfoDTO musicInfoDTO=new MusicInfoDTO();
-        musicInfoDTO.setId(String.valueOf(bambooMusicInfo.getId()));
+//        musicInfoDTO.setId(String.valueOf(bambooMusicInfo.getId()));
         musicInfoDTO.setTitle(bambooMusicInfo.getTitle());
         musicInfoDTO.setRoomId(bambooMusicInfo.getRoomId());
         musicInfoDTO.setAuthor(bambooMusicInfo.getAuthor());

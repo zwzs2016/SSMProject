@@ -152,6 +152,7 @@ public class UserController {
         bambooMusicInfoService.beforeInsertCheck(username);
         bambooMusicInfoDTO.setAuthor(username);
         bambooMusicInfoDTO.setLiveCode(liveCode);
+        bambooMusicInfoDTO.setToken(token);
         int result=userService.saveToMusicInfo(bambooMusicInfoDTO);
 
         if (result==SqlExecuteStatus.INSERT_FAIL.getValue()){
