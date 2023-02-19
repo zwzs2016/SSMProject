@@ -2,18 +2,19 @@
 
 CREATE TABLE `bamboo_music_info` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `room_id` varchar(10) NOT NULL COMMENT '房间号码',
+  `room_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '房间号码',
   `title` varchar(50) DEFAULT NULL COMMENT '标题',
-  `author` varchar(50) DEFAULT NULL COMMENT '作家',
+  `author` varchar(50) NOT NULL COMMENT '作家',
   `remarks` varchar(100) DEFAULT NULL COMMENT '备注',
   `live_url` varchar(100) NOT NULL COMMENT 'liveurl地址',
+  `token` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'token',
   `img_data` blob COMMENT '图片',
   `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `bamboo_music_info_room_id_UN` (`room_id`),
-  UNIQUE KEY `bamboo_music_info_UN` (`author`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE KEY `bamboo_music_info_UN` (`room_id`),
+  UNIQUE KEY `bamboo_music_info_AUTHOR_UN` (`author`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- myproject.`role` definition
@@ -43,6 +44,18 @@ CREATE TABLE `room_info` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
+-- myproject.room_preferences definition
+
+CREATE TABLE `room_preferences` (
+  `user_id` int NOT NULL,
+  `room_id` int NOT NULL,
+  `preference` float NOT NULL COMMENT '喜欢程度暂时用关注度来代替',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`user_id`,`room_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 -- myproject.`user` definition
 
 CREATE TABLE `user` (
@@ -58,7 +71,7 @@ CREATE TABLE `user` (
   `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_UN` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='用户表';
 
 
 -- myproject.user_with_role definition
@@ -68,4 +81,4 @@ CREATE TABLE `user_with_role` (
   `user_id` int NOT NULL,
   `role_id` int NOT NULL DEFAULT '2' COMMENT '1.超级管理员 2.普通用户',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色用户关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='角色用户关联表';
