@@ -66,14 +66,9 @@ registry:注册中心server eureka
 
 os run:ubuntu (linux) or  docker...
 
+new function:
 
-
-项目是用来学习java spring 而开发的,后续的功能有待开发更新...
-
-主要是开发是后端,前端是使用的bootstrap,html,vue来请求的,页面的功能不多,可以正常请求
-
-
-
+- ​	 mahout recommend service:service-recommend
 
 
 
