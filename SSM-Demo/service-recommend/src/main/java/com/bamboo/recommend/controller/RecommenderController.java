@@ -22,6 +22,10 @@ public class RecommenderController {
     @PostMapping
     public ResponseEntity recommender(@RequestBody RecommenderDTO recommenderDTO){
         List<RecommendedItem> recommendedItemList = recommenderService.getUserBasedRecommender(recommenderDTO);
+        if (recommendedItemList.size()>0){
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(recommendedItemList);
+        }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(null);
     }

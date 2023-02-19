@@ -48,13 +48,13 @@ public class RoomPreferencesServiceImpl extends ServiceImpl<RoomPreferencesMappe
         //查询出roomid
         queryWrapper.clear();
         queryWrapper.eq("author",name);
-        queryWrapper.select("room_id");
+        queryWrapper.select("id");
 
         BambooMusicInfo bambooMusicInfo = bambooMusicInfoMapper.selectOne(queryWrapper);
 
         RoomPreferences roomPreferences=new RoomPreferences();
         roomPreferences.setUserId(user.getId());
-        roomPreferences.setRoomId(bambooMusicInfo.getRoomId());
+        roomPreferences.setRoomId(bambooMusicInfo.getId());
         roomPreferences.setPreference(roomPreferencesDTO.getPreference());
 
         boolean save = this.save(roomPreferences);

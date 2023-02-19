@@ -17,7 +17,6 @@
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.2.6" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.2.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-to-slf4j:2.14.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.14.1" level="project" />
     <orderEntry type="library" name="Maven: jakarta.annotation:jakarta.annotation-api:1.3.5" level="project" />
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.28" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-json:2.5.6" level="project" />
@@ -47,7 +46,6 @@
     <orderEntry type="library" name="Maven: com.netflix.netflix-commons:netflix-eventbus:0.3.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.netflix.netflix-commons:netflix-infix:0.3.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: commons-jxpath:commons-jxpath:1.3" level="project" />
-    <orderEntry type="library" name="Maven: joda-time:joda-time:2.3" level="project" />
     <orderEntry type="library" name="Maven: com.netflix.archaius:archaius-core:0.7.6" level="project" />
     <orderEntry type="library" name="Maven: javax.ws.rs:jsr311-api:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: com.netflix.servo:servo-core:0.12.21" level="project" />
@@ -73,6 +71,37 @@
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-cache:2.5.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:5.3.12" level="project" />
     <orderEntry type="library" name="Maven: com.stoyanr:evictor:1.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:7.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-core:7.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-secure-sm:7.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-x-content:7.12.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-smile:2.12.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.5" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.12.5" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-geo:7.12.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-backward-codecs:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-grouping:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-join:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queryparser:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-sandbox:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial-extras:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial3d:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-suggest:8.8.0" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-cli:7.12.1" level="project" />
+    <orderEntry type="library" name="Maven: net.sf.jopt-simple:jopt-simple:5.0.2" level="project" />
+    <orderEntry type="library" name="Maven: com.carrotsearch:hppc:0.8.1" level="project" />
+    <orderEntry type="library" name="Maven: joda-time:joda-time:2.10.4" level="project" />
+    <orderEntry type="library" name="Maven: com.tdunning:t-digest:3.2" level="project" />
+    <orderEntry type="library" name="Maven: org.hdrhistogram:HdrHistogram:2.1.9" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.14.1" level="project" />
+    <orderEntry type="library" name="Maven: org.elasticsearch:jna:5.7.0-1" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.elasticsearch:elasticsearch-plugin-classloader:7.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.mahout:mahout-core:0.7" level="project" />
     <orderEntry type="library" name="Maven: org.apache.mahout:mahout-math:0.7" level="project" />
     <orderEntry type="library" name="Maven: org.uncommons.maths:uncommons-maths:1.2.2" level="project" />
@@ -84,7 +113,6 @@
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Maven: com.thoughtworks.xstream:xstream:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: xpp3:xpp3_min:1.1.4c" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:3.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers:3.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.mahout.commons:commons-cli:2.0-mahout" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-math:2.2" level="project" />
@@ -97,10 +125,6 @@
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.apache.solr:solr-commons-csv:3.5.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-benchmark:3.6.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:3.6.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:3.6.0" level="project" />
-    <orderEntry type="library" name="Maven: jakarta-regexp:jakarta-regexp:1.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-memory:3.6.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-facet:3.6.0" level="project" />
     <orderEntry type="library" name="Maven: com.ibm.icu:icu4j:4.8.1.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.2" level="project" />
@@ -135,7 +159,11 @@
     <orderEntry type="library" name="Maven: org.slf4j:jul-to-slf4j:1.7.32" level="project" />
     <orderEntry type="library" name="Maven: com.github.stephenc.eaio-uuid:uuid:3.2.0" level="project" />
     <orderEntry type="library" name="Maven: com.ecyrd.speed4j:speed4j:0.9" level="project" />
-    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:5.1.47" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.5.6" level="project" />
+    <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:4.0.3" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.3.12" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.3.12" level="project" />
+    <orderEntry type="library" name="Maven: mysql:mysql-connector-java:8.0.17" level="project" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.22" level="project" />
     <orderEntry type="module" module-name="service-common" />
     <orderEntry type="library" name="Maven: com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3" level="project" />
@@ -158,38 +186,12 @@
     <orderEntry type="library" name="Maven: io.reactivex.rxjava3:rxjava:3.0.12" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.marshalling:jboss-marshalling:2.0.11.Final" level="project" />
     <orderEntry type="library" name="Maven: org.jboss.marshalling:jboss-marshalling-river:2.0.11.Final" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.5" level="project" />
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.10.22" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-bean:5.1.6" level="project" />
     <orderEntry type="library" name="Maven: org.jodd:jodd-core:5.1.6" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-elasticsearch:4.2.6" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-tx:5.3.12" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-commons:2.5.6" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch.client:transport:7.12.1" level="project" />
-    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch:7.12.1" level="project" />
-    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-core:7.12.1" level="project" />
-    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-secure-sm:7.12.1" level="project" />
-    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-x-content:7.12.1" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-smile:2.12.5" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:2.12.5" level="project" />
-    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-geo:7.12.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers-common:8.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-backward-codecs:8.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-grouping:8.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-join:8.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-misc:8.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queryparser:8.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-sandbox:8.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial-extras:8.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spatial3d:8.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-suggest:8.8.0" level="project" />
-    <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-cli:7.12.1" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.jopt-simple:jopt-simple:5.0.2" level="project" />
-    <orderEntry type="library" name="Maven: com.carrotsearch:hppc:0.8.1" level="project" />
-    <orderEntry type="library" name="Maven: com.tdunning:t-digest:3.2" level="project" />
-    <orderEntry type="library" name="Maven: org.hdrhistogram:HdrHistogram:2.1.9" level="project" />
-    <orderEntry type="library" name="Maven: org.elasticsearch:jna:5.7.0-1" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.elasticsearch:elasticsearch-plugin-classloader:7.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch.plugin:reindex-client:7.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch:elasticsearch-ssl-config:7.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.elasticsearch.plugin:lang-mustache-client:7.12.1" level="project" />

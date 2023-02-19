@@ -21,8 +21,8 @@ public class RoomPreferences implements Serializable {
     private Integer userId;
 
     @TableField("room_id")
-    private String roomId;
+    private Integer roomId;
 
     @TableField("preference")
-    private Integer preference;
+    private Float preference;
 }

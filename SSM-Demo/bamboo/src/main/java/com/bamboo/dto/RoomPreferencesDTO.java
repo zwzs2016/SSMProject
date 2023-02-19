@@ -14,5 +14,5 @@ public class RoomPreferencesDTO {
     private String liveCode;
 
     @NotEmpty(message = "preference不能为空")
-    private Integer preference;
+    private Float preference;
 }

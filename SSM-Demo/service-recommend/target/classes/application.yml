@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: recommender
+  datasource:
+    url: jdbc:mysql://localhost:3306/myproject
+    username: root
+    password: zw123
+    initial-size: 1
+    max-idle: 2
+    max-active: 3
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #配置中心地址
+      defaultZone: http://localhost:8081/eureka
