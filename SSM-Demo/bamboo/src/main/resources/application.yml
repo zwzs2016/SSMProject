@@ -46,3 +46,13 @@ eureka:
     service-url:
       #配置中心地址
       defaultZone: http://localhost:8081/eureka
+
+#配置ribbon负载均衡
+search-server: # 服务名
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule  # 选择负载均衡策略，默认为轮询方式，当前配置为随机方式
+    ConnectTimeout: 250                 # 连接超时时间
+    ReadTimeout: 1000                   # ribbon 读取超时时间
+    OkToRetryOnAllOperations: true      # 是否对所有操作都进行重试
+    MaxAutoRetriesNextServer: 1         # 切换实例的重试次数
+    MaxAutoRetries: 1

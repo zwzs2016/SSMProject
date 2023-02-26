@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <script src="https://unpkg.com/vue@next"></script>
+        
+        <!-- <link href="https://unpkg.com/video.js/dist/video-js.css" rel="stylesheet">
+    
+        
+        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>	 -->
+        
+    
+        <!-- <script src="https://unpkg.com/video.js/dist/video.js"></script>
+        <script src="https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js"></script> -->
+        
+        <script src="https://cdn.bootcdn.net/ajax/libs/typeit/8.7.1/index.umd.min.js"></script>
+        
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+        <!-- 新 Bootstrap5 核心 CSS 文件 -->
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/css/bootstrap.min.css">
+        
+        <!--  popper.min.js 用于弹窗、提示、下拉菜单 -->
+        <script src="https://cdn.staticfile.org/popper.js/2.9.3/umd/popper.min.js"></script>
+        
+        <!-- 最新的 Bootstrap5 核心 JavaScript 文件 -->
+        <script src="https://cdn.staticfile.org/twitter-bootstrap/5.1.1/js/bootstrap.min.js"></script>
+        <title>chatgpt</title>
+    
+        <style>
+            
+            div{
+                width: 100%;
+            }
+        </style>
+      </head>
+<body>
+    <div id="app">
+        <div v-for="(v,i) in showList">
+            <div class="card">
+                <div class="card-header">
+                    {{requestTextHeader}}
+                  </div>
+                <div class="card-body">
+                  {{v.sendQuestion}}
+                </div>
+              </div>
+            <div class="card">
+                <div class="card-header">
+                    {{responseTextHeader}}
+                  </div>
+                <div class="card-body">
+                  {{v.responseText}}
+                </div>
+              </div>
+        </div>
+        
+        <div class="row">
+            <div class="mb-3 col">
+            <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="请输入问题" v-model="sendQuestion" aria-required="true">
+            </div>
+            <div class="col">
+                <button type="button" class="btn btn-primary" @click="question" :disabled="isDisable" data-bs-toggle="modal" data-bs-target="#loadModal">{{sendText}}</button>
+            </div>
+
+
+            <!-- Modal -->
+            <div class="modal fade" id="loadModal"  tabindex="-1" aria-labelledby="loadModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-body">
+                        <div class="spinner-border text-info"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="test">
+                
+            </div>
+            
+        </div>
+        
+    </div>
+</body>
+<script>
+    const { createApp } = Vue
+    createApp({
+    data() {
+      return {
+           showList:[],
+           responseTextHeader:'答案',
+           requestTextHeader:'问题',
+        //    responseText:'答案',
+        //    requestText:'问题',
+           sendText:'发送',
+           sendQuestion:'',
+           baseUrl:'http://localhost:9000/',
+           isDisable:false
+        }
+    },
+    updated(){
+        // new TypeIt("#responseText", {
+        //     strings: 'jjjjjjjj',
+        // }).go();
+    },
+    methods:{
+        question(){
+            let that=this;
+            if(that.sendQuestion.length==0) {
+                alert('请输入内容');
+                return;
+            };
+            that.isDisable=true;
+            axios.get(that.baseUrl+'chatgpt/question/'+that.sendQuestion)
+            .then(function(res){
+                if(res.status==200){
+                    let data=res.data;
+                    let showListObj={};
+                    showListObj['sendQuestion']=that.sendQuestion;
+                    showListObj['responseText']=data.choices[0].text;
+                    that.showList.push(showListObj);
+                    that.isDisable=false;
+                    that.sendQuestion='';
+                    // document.getElementById("loadModal").modal(hide);
+                    // that.responseText=res.data.text;
+                    
+                }
+            })
+        }
+
+    }
+    }).mount('#app')
+</script>
+<script>
+// new TypeIt("#test", {
+//     strings: "This is what will be typed!",
+// }).go();
+
+</script>
+</html>

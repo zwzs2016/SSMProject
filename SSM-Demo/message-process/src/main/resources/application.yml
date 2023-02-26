@@ -22,3 +22,11 @@ eureka:
 
 server:
   port: 9000
+
+
+custom:
+  openai:
+    apikey: sk-***** #you apikey
+    connectTimeout: 60
+    writeTimeout: 60
+    readTimeout: 60

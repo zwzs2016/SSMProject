@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/service-config/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/service-getway/pom.xml" />
+        <option value="$PROJECT_DIR$/service-search-master/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: search-server
+  data:
+    elasticsearch:
+      cluster-name: elasticsearch
+      cluster-nodes: 127.0.0.1:9300
+  kafka:
+    bootstrap-servers: localhost:9092 #地址，多个中间使用,分割:127.0.0.1:9092,127.0.0.1:9093
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer        #发送key类型
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer        #发送value类型
+    consumer:
+      group-id: SEARCH #群组ID
+      enable-auto-commit: false        #停止（取消）自动发送
+      auto-offset-reset: latest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer        #接收key类型
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer        #接收value类型
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #配置中心地址
+      defaultZone: http://localhost:8081/eureka

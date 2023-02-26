@@ -20,7 +20,9 @@
     <file url="file://$PROJECT_DIR$/service-recommend/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-registry/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/service-registry/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/service-search/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/service-search/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-search-master/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-search-master/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-search-secondary/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/service-search-secondary/src/main/resources" charset="UTF-8" />
   </component>
 </project>

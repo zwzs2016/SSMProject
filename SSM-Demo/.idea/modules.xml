@@ -14,7 +14,8 @@
       <module fileurl="file://$PROJECT_DIR$/service-getway/service-getway.iml" filepath="$PROJECT_DIR$/service-getway/service-getway.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-recommend/service-recommend.iml" filepath="$PROJECT_DIR$/service-recommend/service-recommend.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-registry/service-registry.iml" filepath="$PROJECT_DIR$/service-registry/service-registry.iml" />
-      <module fileurl="file://$PROJECT_DIR$/service-search/service-search.iml" filepath="$PROJECT_DIR$/service-search/service-search.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-search-master/service-search-master.iml" filepath="$PROJECT_DIR$/service-search-master/service-search-master.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-search-secondary/service-search-secondary.iml" filepath="$PROJECT_DIR$/service-search-secondary/service-search-secondary.iml" />
     </modules>
   </component>
 </project>

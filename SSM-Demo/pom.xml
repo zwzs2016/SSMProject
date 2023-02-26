@@ -30,6 +30,7 @@
         <module>bamboo</module>
         <module>service-search</module>
         <module>service-recommend</module>
+        <module>service-search-secondary</module>
 
     </modules>
 
