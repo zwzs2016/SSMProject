@@ -1,11 +1,65 @@
 spring:
   application:
     name: getway-server
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false   #开启Eureka服务发现
+#          lower-case-service-id: true
+      routes:
+        - id: api-recommender #推荐系统服务
+          uri: lb://service-recommender
+          order: -9999
+#          uri: http://192.168.1.103:9098
+          predicates:
+            - Path=/recommender/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                #                  key-resolver: "#{@uriKeyResolver}"
+                key-resolver: "#{@uriKeyResolver}"
+                redis-rate-limiter.replenishRate: 1 #令牌桶每秒填充速率
+                redis-rate-limiter.burstCapacity: 1 #令牌桶容量
+                redis-rate-limiter.requestedTokens: 1 #每次消耗令牌个数
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+    timeout: 3000
+    client-type: lettuce
+#    cluster:
+#      nodes: xxx
+#      max-redirects: 7
+    lettuce:
+      pool:
+        max-active: 500
+        max-wait: -1
+        max-idle: 50
+        min-idle: 100
+        time-between-eviction-runs: 180000
+#  redis:
+#    port: 6379
+#    host: localhost #使用ip则把redis conf的 bind 127.0.0.1注释掉
+#    timeout: 10000        # 连接超时时间
+#    lettuce:
+#      pool:
+#        #连接池最大连接数（使用负值表示没有限制）
+#        max-active: 300
+#        #连接池最大阻塞等待时间（使用负值表示没有限制）
+#        max-wait: -1S
+#        #连接池中的最大空闲连接
+#        max-idle: 100
+#        #连接池中的最小空闲连接
+#        min-idle: 20
+
+
+
 
 eureka:
   client:
-    register-with-eureka: true
-    fetch-registry: true
+#    register-with-eureka: true
+#    fetch-registry: true
     service-url:
       #配置中心地址
       defaultZone: http://localhost:8081/eureka

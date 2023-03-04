@@ -19,7 +19,7 @@ public class RecommenderController {
     @Autowired
     RecommenderService recommenderService;
 
-    @PostMapping
+    @PostMapping("/getrecommenderlist")
     public ResponseEntity recommender(@RequestBody RecommenderDTO recommenderDTO){
         List<RecommendedItem> recommendedItemList = recommenderService.getUserBasedRecommender(recommenderDTO);
         if (recommendedItemList.size()>0){
