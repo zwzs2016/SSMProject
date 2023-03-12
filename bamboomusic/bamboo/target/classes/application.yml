@@ -1,0 +1,189 @@
+jasypt:
+  encryptor:
+    # 指定加解密在spring ioc容器中bean的名称，默认 jasyptStringEncryptor
+    bean: myStringEncryptor
+    # 盐值
+    password: bamboo
+    property:
+      # 标识为加密属性的前缀
+      prefix: ENC(
+      # 标识为加密属性的后缀
+      suffix: )
+
+# 滑块验证码
+aj:
+  captcha:
+    # 缓存类型
+    cache-type: redis
+    # blockPuzzle 滑块 clickWord 文字点选  default默认两者都实例化
+    type: blockPuzzle
+    # 右下角显示字
+    water-mark: ruoyi.vip
+    # 校验滑动拼图允许误差偏移量(默认5像素)
+    slip-offset: 5
+    # aes加密坐标开启或者禁用(true|false)
+    aes-status: true
+    # 滑动干扰项(0/1/2)
+    interference-options: 2
+
+custom:
+  expiration:
+    time:
+      bamboomusic_query: 300
+  prefix:
+    live_url: http://localhost:8888/bamboo.html?liveShareUrl=
+  kafka:
+    topic:
+      musicinfo: musicinfosearch
+
+spring:
+  application:
+    name: bamboo
+
+  shardingsphere:
+    datasource:
+      names:
+        ds0,ds1
+      # 主数据源
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/myproject?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+        username: root
+        password: zw123
+      # 从数据源
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3307/myproject?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+        username: root
+        password: zw123
+
+    sharding:
+      # 默认的库
+      default-data-source-name: db0
+      # 绑定的表 不配置也没找出啥问题
+      binding-tables: user
+      # 配置表的分片规则
+      tables:
+        # 指定某个表的分片配置
+        user:
+          # 这个配置是告诉sharding有多少个库和多少个表
+          actual-data-nodes: db0.user$->{0..1}
+          #分库策略
+#          database-strategy:
+#            # 行表达式模式
+#            inline:
+#              # 选择需要分库的字段，根据那个字段进行区分
+#              sharding-column: age
+#              # 表达式，分库的算法，这个是通过年龄取模然后决定落到哪个库
+#              algorithm-expression: db$->{age % 2 + 1}
+          # 主键生成策略（如果是自动生成的，在插入数据的sql中就不要传id，null也不行，直接插入字段中就不要有主键的字段）
+          key-generator:
+            # 对应的数据库表的主键
+            column: id
+            # 生成方式， 雪花模式
+            type: SNOWFLAKE
+          # 配置表分片策略
+          table-strategy:
+            # 行表达式
+            inline:
+              # 配置表分片的字段
+              sharding-column: id
+              # 配置表分片算法
+              algorithm-expression: user$->{id % 2 +1}
+    masterslave:
+      # 读写分离配置
+      load-balance-algorithm-type: round_robin #轮询
+      # 最终的数据源名称
+      name: dataSource
+      # 主库数据源名称
+      master-data-source-name: ds0
+      # 从库数据源名称列表，多个逗号分隔
+      slave-data-source-names: ds1
+    props:
+      sql.show: true
+
+#  shardingsphere:
+#    datasource:
+#      names:
+#        ds0,ds1
+#      # 主数据源
+#      ds0:
+#        type: com.alibaba.druid.pool.DruidDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        url: jdbc:mysql://localhost:3306/myproject?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+#        username: root
+#        password: zw123
+#      # 从数据源
+#      ds1:
+#        type: com.alibaba.druid.pool.DruidDataSource
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        url: jdbc:mysql://localhost:3307/myproject?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+#        username: root
+#        password: zw123
+#
+#    sharding-rule:
+#      # 默认数据源，主要用于写，注意一定要配置读写分离 ,注意：如果不配置，那么就会把三个节点都当做从slave节点，新增，修改和删除会出错。
+#      default-data-source-name: ds0
+#      # 配置分表的规则
+#      tables:
+#        # t_user 逻辑表名
+#        t_user:
+#          # 数据节点：数据源$->{0..N}.逻辑表名$->{0..N}
+#          actual-data-nodes: ds${0..1}.t_user_${0..1}
+#          # 拆分库策略
+##          database-strategy:
+##            inline:
+##              sharding-column: sex    # 分片字段（分片键）
+##              algorithm-expression: ds$->{sex % 2} # 分片算法表达式
+##           拆分表策略
+#          table-strategy:
+#            inline:
+##            standard:
+#              sharding-column: id    # 分片字段（分片键）
+#              algorithm-expression: t_user${id % 2+1} # 分片算法表达式
+#          key-generator:
+#            # 主键的列名
+#            column: id
+#            type: SNOWFLAKE
+#      binding-tables:
+#        - user
+#    masterslave:
+#      # 读写分离配置
+#      load-balance-algorithm-type: round_robin #轮询
+#      # 最终的数据源名称
+#      name: dataSource
+#      # 主库数据源名称
+#      master-data-source-name: ds0
+#      # 从库数据源名称列表，多个逗号分隔
+#      slave-data-source-names: ds1
+#    props:
+#      sql:
+#        show: true #开启SQL显示，默认false
+  main:
+    allow-bean-definition-overriding: true  #覆盖SpringBootConfiguration中的名为														dataSource 的bean，因为我们用的是														ShardingJDBC
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #配置中心地址
+      defaultZone: http://localhost:8081/eureka
+
+#配置ribbon负载均衡
+search-server: # 服务名
+  ribbon:
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule  # 选择负载均衡策略，默认为轮询方式，当前配置为随机方式
+    ConnectTimeout: 250                 # 连接超时时间
+    ReadTimeout: 1000                   # ribbon 读取超时时间
+    OkToRetryOnAllOperations: true      # 是否对所有操作都进行重试
+    MaxAutoRetriesNextServer: 1         # 切换实例的重试次数
+    MaxAutoRetries: 1
+
+
+# 整合mybatis的配置XXXXX
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
+#  type-aliases-package: com.bamboo.entity

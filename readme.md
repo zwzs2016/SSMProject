@@ -70,7 +70,7 @@ new function:
 
 - ​	 mahout recommend service:service-recommend
 
+- ​     getway service add > redis-rate-limiter 			
 
-
-
+- ​	mysql主从复制 mycat sharding分库分表
 
