@@ -1,10 +1,4 @@
-# bamboo音乐电台
-
-## 使用到的technology:
-
-### 	后端 primary:
-
-​		spring boot 
+# 在线视频商品平台bamboo
 
 ​		spring cloud (eureka)
 
@@ -26,16 +20,6 @@
 
 ​		nginx
 
-### 	前端 primary：
-
-​		vue 3.0
-
-​		bootsrap v5
-
-​		html
-
-​		axios
-
 
 
 ### 	第三方服务:
@@ -48,11 +32,11 @@
 
 ## Project Description:
 
-## bamboo音乐直播电台,使用推流服务和spring实现的一个可以通过推流工具进行直播推流的Web项目
+## 在线视频商品平台bamboo,使用推流服务和spring实现的通过推流工具直播推流的商品项目
 
 login auth登录模块==>实现登录注册 spring security
 
-bamboo直播模块==>实现推流rmtp
+bamboo==>实现推流rmtp
 
 消息处理模块==>kafka异步消息消费
 
@@ -73,4 +57,6 @@ new function:
 - ​     getway service add > redis-rate-limiter 			
 
 - ​	mysql主从复制 mycat sharding分库分表
+
+- ​    seata分布式框架
 
