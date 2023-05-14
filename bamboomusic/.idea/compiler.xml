@@ -8,40 +8,28 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="bamboo" />
-        <module name="service-recommend" />
         <module name="com-uwan" />
         <module name="service-search-secondary" />
         <module name="service-config" />
         <module name="message-process" />
-        <module name="service-getway" />
         <module name="service-auth-authentication" />
-        <module name="service-search-master" />
         <module name="service-auth" />
+        <module name="bamboo" />
+        <module name="service-recommend" />
+        <module name="service-getway" />
+        <module name="service-goods" />
+        <module name="service-search-master" />
         <module name="service-registry" />
         <module name="service-common" />
+        <module name="service-payment" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="bamboo" target="1.8" />
-      <module name="BamBooMusic" target="1.8" />
-      <module name="com-uwan" target="1.8" />
-      <module name="message-process" target="8" />
-      <module name="service-auth" target="1.8" />
-      <module name="service-auth-authentication" target="8" />
-      <module name="service-common" target="1.8" />
-      <module name="service-config" target="1.5" />
-      <module name="service-getway" target="1.8" />
-      <module name="service-recommend" target="8" />
-      <module name="service-registry" target="1.8" />
-      <module name="service-search-master" target="1.8" />
-      <module name="service-search-secondary" target="8" />
       <module name="SSM" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="BamBooMusic" options="" />
       <module name="SSM" options="-parameters" />
       <module name="bamboo" options="-parameters" />
       <module name="com-uwan" options="-parameters" />
@@ -50,6 +38,9 @@
       <module name="service-auth-authentication" options="-parameters" />
       <module name="service-common" options="-parameters" />
       <module name="service-getway" options="-parameters" />
+      <module name="service-goods" options="-parameters" />
+      <module name="service-parent" options="-parameters" />
+      <module name="service-payment" options="-parameters" />
       <module name="service-recommend" options="-parameters" />
       <module name="service-registry" options="-parameters" />
       <module name="service-search-master" options="-parameters" />

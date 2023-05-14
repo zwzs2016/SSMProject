@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: goods-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/myproject?serverTimezone=Asia/Shanghai
+    username: root
+    password: zw123
+    initial-size: 1
+    max-idle: 2
+    max-active: 3
+
+
+ribbon:
+  eureka:
+    enabled: true
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      #配置中心地址
+      defaultZone: http://localhost:8081/eureka
+
+# Seata Config
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: bamboo_tx_group
+  service:
+    vgroup-mapping:
+      # 此处配置对应Server端配置registry.eureka.application的值
+      bamboo_tx_group: default
+#  registry:
+#    type: eureka
+#    eureka:
+#      application: ${spring.application.name}
+#      service-url: http://localhost:8081/eureka
+#      weight: 1
